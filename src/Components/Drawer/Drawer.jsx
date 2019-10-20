@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
@@ -27,6 +27,7 @@ import imgDoctor from "../../Images/Doctor.svg";
 import imgPharmacy from "../../Images/Pharmacy.svg";
 import imgHospital from "../../Images/Hospital.svg";
 import imgLaboratoy from "../../Images/Laboratory.svg";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -222,53 +223,64 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <img
-                className="SearchImage"
-                src={imgDoctor}
-                alt="imageNotFound"
-              ></img>
-            </ListItemIcon>
-            <ListItemText primary="Doctors" style={{ marginLeft: "10px" }} />
-          </ListItem>
+          <Link to="/doctorChart">
+            <ListItem button>
+              <ListItemIcon>
+                <img
+                  className="SearchImage"
+                  src={imgDoctor}
+                  alt="imageNotFound"
+                ></img>
+              </ListItemIcon>
+              <ListItemText primary="Doctors" style={{ marginLeft: "10px" }} />
+            </ListItem>
+          </Link>
           <Divider />
-          <ListItem button>
-            <ListItemIcon>
-              <img
-                className="SearchImage"
-                src={imgHospital}
-                alt="imageNotFound"
-              ></img>
-            </ListItemIcon>
-            <ListItemText primary="Hospital" style={{ marginLeft: "10px" }} />
-          </ListItem>
+          <Link to="/hospitalChart">
+            <ListItem button>
+              <ListItemIcon>
+                <img
+                  className="SearchImage"
+                  src={imgHospital}
+                  alt="imageNotFound"
+                ></img>
+              </ListItemIcon>
+              <ListItemText primary="Hospital" style={{ marginLeft: "10px" }} />
+            </ListItem>
+          </Link>
           <Divider />
-          <ListItem button>
-            <ListItemIcon>
-              <img
-                className="SearchImage"
-                src={imgLaboratoy}
-                alt="imageNotFound"
-              ></img>
-            </ListItemIcon>
-            <ListItemText primary="Laboratory" style={{ marginLeft: "10px" }} />
-          </ListItem>
+          <Link to="/laboratotyChart">
+            <ListItem button>
+              <ListItemIcon>
+                <img
+                  className="SearchImage"
+                  src={imgLaboratoy}
+                  alt="imageNotFound"
+                ></img>
+              </ListItemIcon>
+              <ListItemText
+                primary="Laboratory"
+                style={{ marginLeft: "10px" }}
+              />
+            </ListItem>
+          </Link>
           <Divider />
-          <ListItem button>
-            <ListItemIcon>
-              <img
-                className="SearchImage"
-                src={imgPharmacy}
-                alt="imageNotFound"
-              ></img>
-            </ListItemIcon>
-            <ListItemText primary="Pharmacy" style={{ marginLeft: "10px" }} />
-          </ListItem>
+          <Link to="/pharmacyChart">
+            <ListItem button>
+              <ListItemIcon>
+                <img
+                  className="SearchImage"
+                  src={imgPharmacy}
+                  alt="imageNotFound"
+                ></img>
+              </ListItemIcon>
+              <ListItemText primary="Pharmacy" style={{ marginLeft: "10px" }} />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
+        {/* <div className={classes.toolbar} />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
@@ -297,7 +309,7 @@ export default function MiniDrawer() {
           sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
           eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
           posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        </Typography> */}
       </main>
     </div>
   );
