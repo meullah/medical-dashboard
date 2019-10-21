@@ -1,36 +1,61 @@
 import React, { Component } from "react";
-import { Line } from "react-chartjs-2";
-export default class hospitalChart extends Component {
-  state = {
-    data: {
-      labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri"],
-      datasets: [
-        {
-          label: "Daily Income",
-          data: [100, 110, 120, 105, 90, 100, 85],
-          backgroundColor: "rgba(0,255,0,0.4)"
-        },
-        {
-          label: "Daily Expenses",
-          data: [90, 100, 140, 135, 150, 90, 95],
-          backgroundColor: "rgba(255,0,0,0.6)"
-        }
-      ]
-    }
-  };
+// import { Line } from "react-chartjs-2";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+
+const myCardStyle = {
+  height: "75px"
+};
+export default class doctorsChart extends Component {
   render() {
     return (
       <div
         style={{
+          flexGrow: 1,
           position: "relative",
-          height: "550px",
-          width: "600px",
           marginLeft: "100px",
-          marginTop: "40px"
+          marginTop: "40px",
+          marginRight: "25px"
         }}
       >
-        <h3>Charts Related to Hospitals</h3>
-        <Line options={{ responsive: true }} data={this.state.data} />
+        <Grid container spacing={3}>
+          <Grid item xs={3}>
+            <Card style={myCardStyle}>
+              <CardContent></CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card style={myCardStyle}>
+              <CardContent></CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card style={myCardStyle}>
+              <CardContent></CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card style={myCardStyle}>
+              <CardContent></CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Card>
+              <CardContent></CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6}>
+            <Card>
+              <CardContent></CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6}>
+            <Card>
+              <CardContent></CardContent>
+            </Card>
+          </Grid>
+        </Grid>
       </div>
     );
   }
