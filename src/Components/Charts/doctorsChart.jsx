@@ -118,14 +118,11 @@ export default class doctorsChart extends Component {
             <Card style={{ height: "250px" }}>
               <CardContent>
                 <h3>Most Recomended Services</h3>
-                <h4>1. X-Ray</h4>
-                <h4>2. Blood test</h4>
-                <h4>3. MRI</h4>
-                {/* <h1>
-                  {this.state.recomendedServices.services.forEach(el => {
-                    el;
-                  })}
-                </h1> */}
+                {this.state.recomendedServices.services.map((el, index) => (
+                  <h4>
+                    {index + 1}. {el}
+                  </h4>
+                ))}
               </CardContent>
             </Card>
           </Grid>
