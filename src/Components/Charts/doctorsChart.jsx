@@ -24,7 +24,7 @@ export default class doctorsChart extends Component {
       datasets: [
         {
           label: "Number of patients checked",
-          data: [100, 110, 120, 105, 90, 100, 85, 95, 100, 105, 110, 120],
+          data: [100, 110, 76, 105, 90, 100, 50, 95, 100, 105, 110, 120],
           borderColor: "rgb(255,0,0)",
           borderWidth: 1,
           backgroundColor: "rgba(255,0,0,0.1)"
@@ -66,44 +66,52 @@ export default class doctorsChart extends Component {
   };
   render() {
     return (
-      <div
-        style={{
-          position: "relative",
-          height: "100%",
-          maxHeight: "100%",
-          width: "680px",
-          marginLeft: "100px",
-          marginTop: "0px",
-          paddingTop: "30px"
-        }}
-      >
+      <div style={{}}>
         <Grid container spacing={2}>
-          <Grid item xs={7}>
+          <Grid item xs={12}>
             <Card style={{ height: "250px" }}>
               <CardContent>
-                {/* <h3>Charts Related to Doctors</h3> */}
-                <Line options={{ responsive: true }} data={this.state.data} />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={5}>
-            <Card style={{ height: "250px" }}>
-              <CardContent>
-                <h3>Charts Related to Doctors</h3>
-                <Pie
-                  options={{ responsive: true }}
-                  data={this.state.GenderChart}
+                <Line
+                  width="1200px"
+                  height="220px"
+                  options={{
+                    responsive: false,
+                    scales: {
+                      yAxes: [
+                        {
+                          ticks: {
+                            max: 130,
+                            min: 50,
+                            stepSize: 20
+                          }
+                        }
+                      ]
+                    }
+                  }}
+                  data={this.state.data}
                 />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={4}>
+            <Card style={{ height: "250px" }}>
+              <CardContent style={{ marginLeft: "40px" }}>
+                <Pie
+                  height="220px"
+                  data={this.state.GenderChart}
+                  options={{ responsive: false }}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
             <Card style={{ height: "250px" }}>
               <CardContent>
-                {/* <h3>Charts Related to Doctors</h3> */}
                 <Bar
+                  width="360px"
+                  height="230px"
                   options={{
-                    responsive: true,
+                    responsive: false,
                     scales: {
                       xAxes: [{ stacked: true }],
                       yAxes: [{ stacked: true }]
@@ -114,12 +122,12 @@ export default class doctorsChart extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <Card style={{ height: "250px" }}>
               <CardContent>
                 <h3>Most Recomended Services</h3>
                 {this.state.recomendedServices.services.map((el, index) => (
-                  <h4>
+                  <h4 key={index}>
                     {index + 1}. {el}
                   </h4>
                 ))}
