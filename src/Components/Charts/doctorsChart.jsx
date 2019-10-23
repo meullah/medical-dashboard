@@ -51,12 +51,12 @@ export default class doctorsChart extends Component {
         {
           label: "Female",
           data: [30, 70, 120, 50],
-          backgroundColor: "rgb(224,0,50)"
+          backgroundColor: "rgba(198, 7, 219,0.7)"
         },
         {
           label: "Male",
           data: [60, 30, 80, 60],
-          backgroundColor: "rgb(255,178,000)"
+          backgroundColor: "rgba(18, 149, 219,0.5)"
         }
       ]
     },

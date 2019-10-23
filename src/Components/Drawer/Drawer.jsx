@@ -279,7 +279,10 @@ export default function MiniDrawer(props) {
           </Link>
         </List>
       </Drawer>
-      <main className={classes.content} style={{ marginTop: "60px" }}>
+      <main
+        className={classes.content}
+        style={{ marginTop: "60px", background: "#efffff" }}
+      >
         {props.children}
       </main>
     </div>
