@@ -29,7 +29,7 @@ import imgHospital from "../../Images/Hospital.svg";
 import imgLaboratoy from "../../Images/Laboratory.svg";
 import { Link } from "react-router-dom";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
     overflowX: "hidden",
     width: theme.spacing(7) + 1,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 4
+      width: theme.spacing(8) + 4
     }
   },
   toolbar: {

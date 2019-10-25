@@ -13,6 +13,7 @@ function App() {
       <Drawer>
         <Route path="/doctorChart" exact component={DoctorChart} />
         <Route path="/hospitalChart" exact component={HospitalChart} />
+        <Route path="/" exact component={HospitalChart} />
         <Route path="/laboratotyChart" exact component={LaboratoryChart} />
         <Route path="/pharmacyChart" exact component={PharmacyChart} />
       </Drawer>
