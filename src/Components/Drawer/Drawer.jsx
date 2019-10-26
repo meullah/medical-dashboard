@@ -223,19 +223,6 @@ export default function MiniDrawer(props) {
         </div>
         <Divider />
         <List>
-          <Link to="/doctorChart">
-            <ListItem button>
-              <ListItemIcon>
-                <img
-                  className="SearchImage"
-                  src={imgDoctor}
-                  alt="imageNotFound"
-                ></img>
-              </ListItemIcon>
-              <ListItemText primary="Doctors" style={{ marginLeft: "10px" }} />
-            </ListItem>
-          </Link>
-          <Divider />
           <Link to="/hospitalChart">
             <ListItem button>
               <ListItemIcon>
@@ -246,6 +233,19 @@ export default function MiniDrawer(props) {
                 ></img>
               </ListItemIcon>
               <ListItemText primary="Hospital" style={{ marginLeft: "10px" }} />
+            </ListItem>
+          </Link>
+          <Divider />
+          <Link to="/doctorChart">
+            <ListItem button>
+              <ListItemIcon>
+                <img
+                  className="SearchImage"
+                  src={imgDoctor}
+                  alt="imageNotFound"
+                ></img>
+              </ListItemIcon>
+              <ListItemText primary="Doctors" style={{ marginLeft: "10px" }} />
             </ListItem>
           </Link>
           <Divider />

@@ -3,7 +3,7 @@ import { Line, Pie, Bar } from "react-chartjs-2";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-
+import "../Drawer/drawer.css"; // for using box shadow
 export default class doctorsChart extends Component {
   state = {
     data: {
@@ -68,7 +68,7 @@ export default class doctorsChart extends Component {
     return (
       <div style={{}}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="BoxShadow">
             <Card style={{ height: "250px" }}>
               <CardContent>
                 <Line
