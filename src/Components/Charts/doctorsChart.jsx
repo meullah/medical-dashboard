@@ -33,6 +33,7 @@ export default class doctorsChart extends Component {
     },
     GenderChart: {
       labels: ["Male", "Female", "Others"],
+
       datasets: [
         {
           label: "Gender",
@@ -76,18 +77,25 @@ export default class doctorsChart extends Component {
                   // width="100vw"
                   height="220px"
                   options={{
+                    legend: {
+                      display: false
+                    },
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
                       yAxes: [
                         {
                           ticks: {
-                            max: 130,
-                            min: 50,
-                            stepSize: 20
+                            // max: 130,
+                            beginAtZero: true
+                            // stepSize: 10
                           },
                           gridLines: {
                             display: false
+                          },
+                          scaleLabel: {
+                            display: true,
+                            labelString: "Number of patients checked"
                           }
                         }
                       ],
@@ -129,6 +137,10 @@ export default class doctorsChart extends Component {
                   width="725px"
                   height="230px"
                   options={{
+                    legend: {
+                      position: "right",
+                      align: "center"
+                    },
                     responsive: false,
                     scales: {
                       xAxes: [
