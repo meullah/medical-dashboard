@@ -41,7 +41,8 @@ export default class doctorsChart extends Component {
             "rgb(224,0,50)",
             "rgb(24,178,255)",
             "rgb(255,178,000)"
-          ]
+          ],
+          clip: { left: 5, top: false, right: -2, bottom: 0 }
         }
       ]
     },
@@ -66,16 +67,17 @@ export default class doctorsChart extends Component {
   };
   render() {
     return (
-      <div style={{}}>
+      <div>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <Card style={{ height: "250px" }}>
               <CardContent>
                 <Line
-                  width="1200px"
+                  // width="100vw"
                   height="220px"
                   options={{
-                    responsive: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                       yAxes: [
                         {
@@ -83,6 +85,16 @@ export default class doctorsChart extends Component {
                             max: 130,
                             min: 50,
                             stepSize: 20
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                        }
+                      ],
+                      xAxes: [
+                        {
+                          gridLines: {
+                            display: false
                           }
                         }
                       ]
@@ -99,22 +111,42 @@ export default class doctorsChart extends Component {
                 <Pie
                   height="220px"
                   data={this.state.GenderChart}
-                  options={{ responsive: false }}
+                  options={{
+                    responsive: false,
+                    legend: {
+                      position: "right",
+                      align: "center"
+                    }
+                  }}
                 />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={8}>
             <Card style={{ height: "250px" }}>
               <CardContent>
                 <Bar
-                  width="360px"
+                  width="725px"
                   height="230px"
                   options={{
                     responsive: false,
                     scales: {
-                      xAxes: [{ stacked: true }],
-                      yAxes: [{ stacked: true }]
+                      xAxes: [
+                        {
+                          stacked: true,
+                          gridLines: {
+                            display: false
+                          }
+                        }
+                      ],
+                      yAxes: [
+                        {
+                          stacked: true,
+                          gridLines: {
+                            display: false
+                          }
+                        }
+                      ]
                     }
                   }}
                   data={this.state.AgeBarChart}
