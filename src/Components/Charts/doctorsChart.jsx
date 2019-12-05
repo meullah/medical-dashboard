@@ -8,24 +8,11 @@ import Image from "@material-ui/icons/Image";
 export default class doctorsChart extends Component {
   state = {
     data: {
-      labels: [
-        "Jan",
-        "Feb",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ],
+      labels: this.props.data[0].labels,
       datasets: [
         {
           label: "Number of patients checked",
-          data: [100, 110, 76, 105, 90, 100, 50, 95, 100, 105, 110, 120],
+          data: this.props.data[0].data,
           borderColor: "rgb(255,0,0)",
           borderWidth: 1,
           backgroundColor: "rgba(255,0,0,0.1)"
@@ -33,12 +20,12 @@ export default class doctorsChart extends Component {
       ]
     },
     GenderChart: {
-      labels: ["Male", "Female", "Others"],
+      labels: this.props.data[1].labels,
 
       datasets: [
         {
           label: "Gender",
-          data: [100, 60, 5],
+          data: this.props.data[1].data,
           backgroundColor: [
             "rgb(224,0,50)",
             "rgb(24,178,255)",
@@ -49,26 +36,26 @@ export default class doctorsChart extends Component {
       ]
     },
     AgeBarChart: {
-      labels: ["Child", "Teen", "Middle", "Old"],
+      labels: this.props.data[2].labels,
       datasets: [
         {
           label: "Female",
-          data: [30, 70, 120, 50],
+          data: this.props.data[2].females,
           backgroundColor: "rgba(198, 7, 219,0.7)"
         },
         {
           label: "Male",
-          data: [60, 30, 80, 60],
+          data: this.props.data[2].males,
           backgroundColor: "rgba(18, 149, 219,0.5)"
         }
       ]
     },
     recomendedServices: {
-      services: ["X-Ray", "Blood CP", "MRI"]
+      services: this.props.data[3].labels
     }
   };
   render() {
-    console.log(this.props.data);
+    console.log(this.props.data[0].labels);
     return (
       <div>
         <Grid container spacing={2}>

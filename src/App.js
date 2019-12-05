@@ -8,16 +8,21 @@ import LaboratoryChart from "./Components/Charts/laboratoryChart";
 import PharmacyChart from "./Components/Charts/pharmacyChart";
 import axios from "axios";
 function App() {
+  const [data, setData] = useState(0);
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/ChartsData")
-      .then(res => console.log(res.data));
-  });
+    async function getData() {
+      const res = await axios.get("http://localhost:4000/ChartsData");
+      setData(res.data);
+      console.log(res.data);
+    }
+
+    getData();
+  }, []);
   return (
     <Router>
       <Drawer>
         <Route path="/doctorChart" exact>
-          <DoctorChart data="test" />
+          <DoctorChart data={data} />
         </Route>
         <Route path="/hospitalChart" exact component={HospitalChart} />
         <Route path="/" exact component={HospitalChart} />
