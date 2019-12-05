@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Line, Pie, Bar } from "react-chartjs-2";
-import Grid from "@material-ui/core/Grid";
+import { Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Image from "@material-ui/icons/Image";
 // import "../Drawer/drawer.css"; // for using box shadow
 export default class doctorsChart extends Component {
   state = {
@@ -67,9 +68,45 @@ export default class doctorsChart extends Component {
     }
   };
   render() {
+    console.log(this.props.data);
     return (
       <div>
         <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <Card style={{ height: "100px" }}>
+              <CardContent>
+                <Image style={{ fontSize: "40px" }} />
+                <div style={{ float: "right" }}>
+                  <Typography variant="h7" style={{ float: "inherit" }}>
+                    label
+                  </Typography>
+                  <br />
+                  <Typography variant="h5">label</Typography>
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card style={{ height: "100px" }}>
+              <CardContent>
+                <Image style={{ fontSize: "40px" }} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card style={{ height: "100px" }}>
+              <CardContent>
+                <Image style={{ fontSize: "40px" }} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card style={{ height: "100px" }}>
+              <CardContent>
+                <Image style={{ fontSize: "40px" }} />
+              </CardContent>
+            </Card>
+          </Grid>
           <Grid item xs={8}>
             <Card style={{ height: "250px" }}>
               <CardContent>
@@ -130,6 +167,7 @@ export default class doctorsChart extends Component {
               </CardContent>
             </Card>
           </Grid>
+
           <Grid item xs={8}>
             <Card style={{ height: "250px" }}>
               <CardContent>
