@@ -26,8 +26,8 @@ export default class hospitalChart extends Component {
           label: "Total Expenses",
           data: [100, 110, 76, 105, 50, 100, 90, 95, 100, 75, 110, 120],
           borderColor: "rgb(97, 1, 107)",
-          borderWidth: 1,
-          backgroundColor: "rgba(97, 1, 107,0.1)"
+          borderWidth: 2,
+          backgroundColor: "rgb(97, 1, 107)"
         }
       ]
     },
@@ -59,18 +59,73 @@ export default class hospitalChart extends Component {
       services: ["X-Ray", "Blood CP", "MRI"]
     }
   };
+  setGradientColor = canvas => {
+    const ctx = canvas.getContext("2d");
+    const gradient = ctx.createLinearGradient(0, 0, 10, 100);
+    gradient.addColorStop(0, "#20f08b");
+    gradient.addColorStop(0.5, "#20f08b");
+    gradient.addColorStop(1, "#07dfb1");
+  };
+  getChartData = canvas => {
+    const data = this.state.data;
+    if (data.datasets) {
+      // let color = "rgba(255, 1, 107,0.5)";
+      const ctx = canvas.getContext("2d");
+      // const gradient = ctx.createLinearGradient(0, 100, 0, 50);
+      var gradient = ctx.createLinearGradient(0, 170, 0, 50);
+      gradient.addColorStop(0, "rgba(128, 182, 244, 0.02)");
+      gradient.addColorStop(1, "rgba(97, 1, 107, 0.40)");
+      
+      data.datasets.forEach((set, i) => {
+        set.backgroundColor = gradient;
+      });
+      // data.datasets.backgroundColor = this.setGradientColor(canvas, color);
+    }
+    return data;
+  };
   render() {
     return (
-      <div style={{}}>
+      <div>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Card style={{ height: "250px" }}>
               <CardContent>
                 <Line
-                  width="1200px"
+                  // width="100vw"
                   height="220px"
-                  options={{ responsive: false }}
-                  data={this.state.data}
+                  options={{
+                    legend: {
+                      display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                      yAxes: [
+                        {
+                          ticks: {
+                            // max: 130,
+                            beginAtZero: true
+                            // stepSize: 10
+                          },
+                          gridLines: {
+                            display: false
+                          },
+                          scaleLabel: {
+                            display: true,
+                            labelString: "Total Expenses"
+                          }
+                        }
+                      ],
+                      xAxes: [
+                        {
+                          gridLines: {
+                            display: false
+                          }
+                        }
+                      ]
+                    }
+                  }}
+                  data={this.getChartData}
                 />
               </CardContent>
             </Card>
