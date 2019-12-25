@@ -1,0 +1,4 @@
+.popup-overlay > .popup-content {
+  background: transparent !important;
+  border: transparent !important;
+}
