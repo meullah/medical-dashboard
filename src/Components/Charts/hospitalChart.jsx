@@ -73,27 +73,16 @@ export default class hospitalChart extends Component {
   closeModal() {
     this.setState({ open: false });
   }
-  setGradientColor = canvas => {
-    const ctx = canvas.getContext("2d");
-    const gradient = ctx.createLinearGradient(0, 0, 10, 100);
-    gradient.addColorStop(0, "#20f08b");
-    gradient.addColorStop(0.5, "#20f08b");
-    gradient.addColorStop(1, "#07dfb1");
-  };
   getChartData = canvas => {
     const data = this.state.data;
     if (data.datasets) {
-      // let color = "rgba(255, 1, 107,0.5)";
       const ctx = canvas.getContext("2d");
-      // const gradient = ctx.createLinearGradient(0, 100, 0, 50);
       var gradient = ctx.createLinearGradient(0, 170, 0, 50);
-      gradient.addColorStop(0, "rgba(128, 182, 244, 0.02)");
-      gradient.addColorStop(1, "rgba(97, 1, 107, 0.40)");
-
+      gradient.addColorStop(0, "rgba(128, 182, 244, 0.00)");
+      gradient.addColorStop(1, "rgba(97, 1, 107, 0.20)");
       data.datasets.forEach((set, i) => {
         set.backgroundColor = gradient;
       });
-      // data.datasets.backgroundColor = this.setGradientColor(canvas, color);
     }
     return data;
   };
@@ -201,7 +190,7 @@ export default class hospitalChart extends Component {
             </Card>
           </Grid>
         </Grid>
-        {/* POP UP Components */}
+        {/* POP UP Component */}
         <Popup
           open={this.state.open}
           closeOnDocumentClick
