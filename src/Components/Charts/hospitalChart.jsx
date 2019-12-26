@@ -36,7 +36,7 @@ export default class hospitalChart extends Component {
         ]
       },
       GenderChart: {
-        labels: ["Male", "Female", "Others"],
+        labels: ["Male", "Female", "GAY"],
         datasets: [
           {
             label: "Total Patients",
