@@ -31,7 +31,7 @@ export default class hospitalChart extends Component {
             label: "Total Expenses",
             data: [100, 110, 76, 105, 50, 100, 90, 95, 100, 75, 110, 120],
             borderColor: "rgb(97, 1, 107)",
-            backgroundColor: "rgb(97, 1, 107)"
+            backgroundColor: "rgb(53, 12, 107)"
           }
         ]
       },
@@ -42,7 +42,7 @@ export default class hospitalChart extends Component {
             label: "Total Patients",
             data: [2300, 3000, 500],
             backgroundColor: [
-              "rgba(224,0,50,0.5)",
+              "rgba(24,0,50,0.5)",
               "rgba(24,178,255,0.5)",
               "rgba(255,178,000,0.5)"
             ]
