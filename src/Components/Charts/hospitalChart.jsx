@@ -31,6 +31,7 @@ export default class hospitalChart extends Component {
             label: "Total Expenses",
             data: [100, 110, 76, 105, 50, 100, 90, 95, 100, 75, 110, 120],
             borderColor: "rgb(97, 1, 107)",
+            borderWidth: 3,
             backgroundColor: "rgb(53, 12, 107)"
           }
         ]
@@ -49,13 +50,73 @@ export default class hospitalChart extends Component {
           }
         ]
       },
-      trendingServicesChart: {
-        labels: ["Cardiology", "Nephrology", "Haematology", "Ophthalmology"],
+      departmentalExpensesChart: {
+        labels: [
+          "Admissions",
+          "Anesthetics",
+          "Burn Center",
+          "Cardiology",
+          "Chaplaincy",
+          "Imaging",
+          "Emergency",
+          "Gastroenterology",
+          "General",
+          "Surgery",
+          "Gynecology",
+          "Haematology",
+          "ICU",
+          "Infection",
+          "Maternity",
+          "Microbiology",
+          "Neonatal",
+          "Nephrology",
+          "Neurology",
+          "Obstetrics",
+          "Therapy",
+          "Oncology",
+          "Ophthalmology",
+          "Orthopaedics",
+          "Otolaryngology",
+          "Physiotherapy",
+          "Radiology",
+          "Radiotherapy"
+        ],
         datasets: [
           {
             label: "Departmental Expenses",
-            data: [4300, 6500, 2900, 5000],
-            backgroundColor: ["#d9ed00", "#7aed6f", "#607b99", "#34263b"]
+            data: [
+              3179,
+              1744,
+              2416,
+              4232,
+              3668,
+              1734,
+              1241,
+              3033,
+              3247,
+              2875,
+              3427,
+              2368,
+              598,
+              2916,
+              974,
+              2187,
+              3281,
+              3328,
+              418,
+              4227,
+              4565,
+              1360,
+              3475,
+              2737,
+              1085,
+              507,
+              2663,
+              1485
+            ],
+            backgroundColor: "yellow",
+            borderColor: "rgb(97, 1, 107)",
+            borderWidth: 3
           }
         ]
       },
@@ -80,7 +141,21 @@ export default class hospitalChart extends Component {
       var gradient = ctx.createLinearGradient(0, 170, 0, 50);
       gradient.addColorStop(0, "rgba(128, 182, 244, 0.00)");
       gradient.addColorStop(1, "rgba(97, 1, 107, 0.20)");
-      data.datasets.forEach((set, i) => {
+      data.datasets.forEach(set => {
+        set.backgroundColor = gradient;
+      });
+    }
+    return data;
+  };
+  getDepartmentalChartData = canvas => {
+    const data = this.state.departmentalExpensesChart;
+    if (data.datasets) {
+      const ctx = canvas.getContext("2d");
+      var gradient = ctx.createLinearGradient(0, 170, 0, 50);
+      gradient.addColorStop(0, "rgba(128, 182, 244, 0.00)");
+      gradient.addColorStop(1, "rgba(97, 1, 107, 0.25)");
+      data.datasets.backgroundColor = gradient;
+      data.datasets.forEach(set => {
         set.backgroundColor = gradient;
       });
     }
@@ -154,6 +229,48 @@ export default class hospitalChart extends Component {
               </CardContent>
             </Card>
           </Grid>
+          <Grid item xs={12}>
+            <Card style={{ height: "250px" }}>
+              <CardContent>
+                <Bar
+                  height="250px"
+                  options={{
+                    legend: {
+                      display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                      yAxes: [
+                        {
+                          ticks: {
+                            // max: 130,
+                            beginAtZero: true
+                            // stepSize: 10
+                          },
+                          gridLines: {
+                            display: false
+                          },
+                          scaleLabel: {
+                            display: true,
+                            labelString: "Departmental Expenses"
+                          }
+                        }
+                      ],
+                      xAxes: [
+                        {
+                          gridLines: {
+                            display: false
+                          }
+                        }
+                      ]
+                    }
+                  }}
+                  data={this.getDepartmentalChartData}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
           <Grid item xs={4}>
             <Card style={{ height: "250px" }}>
               <CardContent style={{ marginLeft: "40px" }}>
@@ -161,18 +278,6 @@ export default class hospitalChart extends Component {
                   height="220px"
                   data={this.state.GenderChart}
                   options={{ responsive: false }}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4}>
-            <Card style={{ height: "250px" }}>
-              <CardContent>
-                <Bar
-                  width="350px"
-                  height="250px"
-                  options={{ responsive: false }}
-                  data={this.state.trendingServicesChart}
                 />
               </CardContent>
             </Card>
