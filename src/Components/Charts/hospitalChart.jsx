@@ -13,6 +13,7 @@ export default class hospitalChart extends Component {
     super(props);
     this.state = {
       open: false,
+      openMorePopUp: false,
       data: {
         labels: [
           "JAN",
@@ -46,6 +47,20 @@ export default class hospitalChart extends Component {
       },
       GenderChart: {
         labels: ["Male", "Female", "Others"],
+        datasets: [
+          {
+            label: "Total Patients",
+            data: [2300, 3000, 500],
+            backgroundColor: [
+              "rgba(24,0,50,0.5)",
+              "rgba(24,178,255,0.5)",
+              "rgba(255,178,000,0.5)"
+            ]
+          }
+        ]
+      },
+      AgeGroupChart: {
+        labels: ["0-18", "18-40", "40+"],
         datasets: [
           {
             label: "Total Patients",
@@ -122,7 +137,7 @@ export default class hospitalChart extends Component {
               2663,
               1485
             ],
-            borderColor: "#d048b6",
+            borderColor: "#1f8ef1",
             borderWidth: 2
           }
         ]
@@ -134,12 +149,20 @@ export default class hospitalChart extends Component {
     };
     this.openMoal = this.openMoal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.openPopUp_more = this.openPopUp_more.bind(this);
+    this.closePopUp_more = this.closePopUp_more.bind(this);
   }
   openMoal() {
     this.setState({ open: true });
   }
   closeModal() {
     this.setState({ open: false });
+  }
+  openPopUp_more() {
+    this.setState({ openMorePopUp: true });
+  }
+  closePopUp_more() {
+    this.setState({ openMorePopUp: false });
   }
   getChartData = canvas => {
     const data = this.state.data;
@@ -161,9 +184,9 @@ export default class hospitalChart extends Component {
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
       var gradient = ctx.createLinearGradient(0, 230, 0, 50);
-      gradient.addColorStop(1, "rgba(72,72,176,0.1)");
-      gradient.addColorStop(0.4, "rgba(72,72,176,0.0)");
-      gradient.addColorStop(0, "rgba(119,52,169,0)");
+      gradient.addColorStop(1, "rgba(29,140,248,0.2)");
+      gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
+      gradient.addColorStop(0, "rgba(29,140,248,0)");
 
       data.datasets.backgroundColor = gradient;
       data.datasets.forEach(set => {
@@ -181,7 +204,8 @@ export default class hospitalChart extends Component {
       marginRight: "15px",
       marginTop: "3px",
       marginBottom: "3px",
-      paddingTop: "10px"
+      paddingTop: "10px",
+      alignItems: "center"
     };
     return (
       <div>
@@ -206,7 +230,7 @@ export default class hospitalChart extends Component {
             />
           </Grid>
           <Grid item xs={12}>
-            <Card style={{ height: "300x" }}>
+            <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Amount Transaction</Typography>
                 <Button
@@ -351,7 +375,7 @@ export default class hospitalChart extends Component {
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <Card style={{ height: "250px" }}>
+            <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Gender</Typography>
                 <Select />
@@ -372,9 +396,44 @@ export default class hospitalChart extends Component {
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <Card style={{ height: "250px" }}>
+            <Card style={{ height: "300px" }}>
+              <div style={myStyles}>
+                <Typography variant="h6">Age Group</Typography>
+                <Select />
+              </div>
               <CardContent>
-                <h3>Trending Services</h3>
+                <Doughnut
+                  height="150px"
+                  data={this.state.AgeGroupChart}
+                  options={{
+                    responsive: true,
+                    legend: {
+                      position: "right",
+                      align: "middle"
+                    }
+                  }}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
+            <Card style={{ height: "300px" }}>
+              <div style={myStyles}>
+                <Typography variant="h6">Trending Services</Typography>
+                <Button
+                  onClick={this.openPopUp_more}
+                  variant="contained"
+                  color="primary"
+                  style={{
+                    float: "right",
+                    marginRight: "12px",
+                    marginBottom: "5px"
+                  }}
+                >
+                  more
+                </Button>
+              </div>
+              <CardContent>
                 {this.state.recomendedServices.services.map((el, index) => (
                   <h4 key={index}>
                     {index + 1}. {el}
@@ -392,16 +451,7 @@ export default class hospitalChart extends Component {
           modal
         >
           <Card>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginLeft: "15px",
-                marginRight: "15px",
-                marginTop: "3px",
-                marginBottom: "3px"
-              }}
-            >
+            <div style={myStyles}>
               <Typography variant="h6">Prediction</Typography>
               <ButtonGroup
                 variant="text"
@@ -459,6 +509,62 @@ export default class hospitalChart extends Component {
                 }}
                 data={this.getChartData}
               />
+            </CardContent>
+          </Card>
+        </Popup>
+        <Popup
+          open={this.state.openMorePopUp}
+          closeOnDocumentClick
+          onClose={this.closePopUp_more}
+          modal
+        >
+          <Card>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <Card>
+                    <div style={myStyles}>
+                      <Typography variant="h6">Doctors</Typography>
+                      <Select />
+                    </div>
+                    <CardContent>
+                      {this.state.recomendedServices.services.map(
+                        (el, index) => (
+                          <h4 key={index}>
+                            {index + 1}. {el}
+                          </h4>
+                        )
+                      )}
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={4}>
+                  <Card>
+                    <CardContent>
+                      {this.state.recomendedServices.services.map(
+                        (el, index) => (
+                          <h4 key={index}>
+                            {index + 1}. {el}
+                          </h4>
+                        )
+                      )}
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={4}>
+                  <Card>
+                    <CardContent>
+                      {this.state.recomendedServices.services.map(
+                        (el, index) => (
+                          <h4 key={index}>
+                            {index + 1}. {el}
+                          </h4>
+                        )
+                      )}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         </Popup>

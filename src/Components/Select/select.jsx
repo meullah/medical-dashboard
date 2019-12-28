@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleSelect() {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
+  const [year, setYear] = React.useState("");
 
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -26,19 +26,19 @@ export default function SimpleSelect() {
   }, []);
 
   const handleChange = event => {
-    setAge(event.target.value);
+    setYear(event.target.value);
   };
 
   return (
     <div>
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
-          Age
+          Year
         </InputLabel>
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value={age}
+          value={year}
           onChange={handleChange}
           labelWidth={labelWidth}
         >
