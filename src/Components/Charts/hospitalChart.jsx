@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import Popup from "reactjs-popup";
 import "./popUp.css";
+import Select from "../Select/select";
 export default class hospitalChart extends Component {
   constructor(props) {
     super(props);
@@ -161,13 +162,24 @@ export default class hospitalChart extends Component {
     }
     return data;
   };
+
   render() {
+    const myStyles = {
+      display: "flex",
+      justifyContent: "space-between",
+      marginLeft: "15px",
+      marginRight: "15px",
+      marginTop: "3px",
+      marginBottom: "3px",
+      paddingTop: "10px"
+    };
     return (
       <div>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Card style={{ height: "300x" }}>
-              <CardContent>
+              <div style={myStyles}>
+                <Typography variant="h6">Amount Transaction</Typography>
                 <Button
                   onClick={this.openMoal}
                   variant="contained"
@@ -180,6 +192,8 @@ export default class hospitalChart extends Component {
                 >
                   Prediction
                 </Button>
+              </div>
+              <CardContent>
                 <Line
                   // width="100vw"
                   height="220px"
@@ -230,7 +244,19 @@ export default class hospitalChart extends Component {
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Card style={{ height: "250px" }}>
+            <Card style={{ height: "320px" }}>
+              <div style={myStyles}>
+                <Typography variant="h6">Departmental Expenses</Typography>
+                <ButtonGroup
+                  variant="contained"
+                  color="primary"
+                  aria-label="contained primary button group"
+                >
+                  <Button selected>1 Month</Button>
+                  <Button>6 Month</Button>
+                  <Button>1 Year</Button>
+                </ButtonGroup>
+              </div>
               <CardContent>
                 <Bar
                   height="250px"
@@ -284,15 +310,7 @@ export default class hospitalChart extends Component {
                 }}
               >
                 <Typography variant="h6">Gender</Typography>
-                <ButtonGroup
-                  variant="text"
-                  color="primary"
-                  aria-label="text primary button group"
-                >
-                  <Button selected>1 Month</Button>
-                  <Button>6 Month</Button>
-                  <Button>1 Year</Button>
-                </ButtonGroup>
+                <Select />
               </div>
               <CardContent>
                 <Doughnut
