@@ -245,8 +245,8 @@ export default class hospitalChart extends Component {
                         {
                           ticks: {
                             // max: 130,
-                            beginAtZero: true
-                            // stepSize: 10
+                            beginAtZero: true,
+                            stepSize: 1000
                           },
                           gridLines: {
                             display: false
@@ -277,7 +277,13 @@ export default class hospitalChart extends Component {
                 <Pie
                   height="220px"
                   data={this.state.GenderChart}
-                  options={{ responsive: false }}
+                  options={{
+                    responsive: true,
+                    legend: {
+                      position: "right",
+                      align: "middle"
+                    }
+                  }}
                 />
               </CardContent>
             </Card>
