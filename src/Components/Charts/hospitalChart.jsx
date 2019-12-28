@@ -15,26 +15,32 @@ export default class hospitalChart extends Component {
       open: false,
       data: {
         labels: [
-          "Jan",
-          "Feb",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC"
         ],
         datasets: [
           {
             label: "Total Expenses",
             data: [100, 110, 76, 105, 50, 100, 90, 95, 100, 75, 110, 120],
-            borderColor: "rgb(97, 1, 107)",
-            borderWidth: 3,
-            backgroundColor: "rgb(53, 12, 107)"
+            borderColor: "#1f8ef1",
+            borderWidth: 2,
+            pointBackgroundColor: "#1f8ef1",
+            pointBorderColor: "rgba(255,255,255,0)",
+            pointHoverBackgroundColor: "#1f8ef1",
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4
           }
         ]
       },
@@ -116,9 +122,8 @@ export default class hospitalChart extends Component {
               2663,
               1485
             ],
-            backgroundColor: "yellow",
-            borderColor: "rgb(97, 1, 107)",
-            borderWidth: 3
+            borderColor: "#d048b6",
+            borderWidth: 2
           }
         ]
       },
@@ -140,9 +145,11 @@ export default class hospitalChart extends Component {
     const data = this.state.data;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
-      var gradient = ctx.createLinearGradient(0, 170, 0, 50);
-      gradient.addColorStop(0, "rgba(128, 182, 244, 0.00)");
-      gradient.addColorStop(1, "rgba(97, 1, 107, 0.20)");
+      var gradient = ctx.createLinearGradient(0, 230, 0, 50);
+
+      gradient.addColorStop(1, "rgba(29,140,248,0.2)");
+      gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
+      gradient.addColorStop(0, "rgba(29,140,248,0)");
       data.datasets.forEach(set => {
         set.backgroundColor = gradient;
       });
@@ -153,9 +160,11 @@ export default class hospitalChart extends Component {
     const data = this.state.departmentalExpensesChart;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
-      var gradient = ctx.createLinearGradient(0, 170, 0, 50);
-      gradient.addColorStop(0, "rgba(128, 182, 244, 0.00)");
-      gradient.addColorStop(1, "rgba(97, 1, 107, 0.25)");
+      var gradient = ctx.createLinearGradient(0, 230, 0, 50);
+      gradient.addColorStop(1, "rgba(72,72,176,0.1)");
+      gradient.addColorStop(0.4, "rgba(72,72,176,0.0)");
+      gradient.addColorStop(0, "rgba(119,52,169,0)");
+
       data.datasets.backgroundColor = gradient;
       data.datasets.forEach(set => {
         set.backgroundColor = gradient;
@@ -222,37 +231,45 @@ export default class hospitalChart extends Component {
                       display: false
                     },
                     tooltips: {
+                      backgroundColor: "#f5f5f5",
+                      titleFontColor: "#333",
+                      bodyFontColor: "#666",
                       bodySpacing: 4,
+                      xPadding: 12,
                       mode: "nearest",
                       intersect: 0,
-                      position: "nearest",
-                      xPadding: 10,
-                      yPadding: 10,
-                      caretPadding: 10
+                      position: "nearest"
                     },
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
                       yAxes: [
                         {
-                          ticks: {
-                            // max: 130,
-                            beginAtZero: true
-                            // stepSize: 10
-                          },
+                          barPercentage: 1.6,
                           gridLines: {
-                            display: false
+                            drawBorder: false,
+                            color: "rgba(29,140,248,0.0)",
+                            zeroLineColor: "transparent"
                           },
-                          scaleLabel: {
-                            display: true,
-                            labelString: "Total Expenses"
+                          ticks: {
+                            suggestedMin: 60,
+                            suggestedMax: 125,
+                            padding: 20,
+                            fontColor: "#9a9a9a"
                           }
                         }
                       ],
                       xAxes: [
                         {
+                          barPercentage: 1.6,
                           gridLines: {
-                            display: false
+                            drawBorder: false,
+                            color: "rgba(29,140,248,0.1)",
+                            zeroLineColor: "transparent"
+                          },
+                          ticks: {
+                            padding: 20,
+                            fontColor: "#9a9a9a"
                           }
                         }
                       ]
@@ -286,27 +303,43 @@ export default class hospitalChart extends Component {
                     },
                     responsive: true,
                     maintainAspectRatio: false,
+                    tooltips: {
+                      backgroundColor: "#f5f5f5",
+                      titleFontColor: "#333",
+                      bodyFontColor: "#666",
+                      bodySpacing: 4,
+                      xPadding: 12,
+                      mode: "nearest",
+                      intersect: 0,
+                      position: "nearest"
+                    },
+
                     scales: {
                       yAxes: [
                         {
-                          ticks: {
-                            // max: 130,
-                            beginAtZero: true,
-                            stepSize: 1000
-                          },
                           gridLines: {
-                            display: false
+                            drawBorder: false,
+                            color: "rgba(225,78,202,0.1)",
+                            zeroLineColor: "transparent"
                           },
-                          scaleLabel: {
-                            display: true,
-                            labelString: "Departmental Expenses"
+                          ticks: {
+                            suggestedMin: 60,
+                            suggestedMax: 120,
+                            padding: 20,
+                            fontColor: "#9e9e9e"
                           }
                         }
                       ],
                       xAxes: [
                         {
                           gridLines: {
-                            display: false
+                            drawBorder: false,
+                            color: "rgba(225,78,202,0.1)",
+                            zeroLineColor: "transparent"
+                          },
+                          ticks: {
+                            padding: 20,
+                            fontColor: "#9e9e9e"
                           }
                         }
                       ]
