@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Popup from "reactjs-popup";
 import "./popUp.css";
 import Select from "../Select/select";
+import CustomCard from "../CustomCard";
 export default class hospitalChart extends Component {
   constructor(props) {
     super(props);
@@ -176,6 +177,25 @@ export default class hospitalChart extends Component {
     return (
       <div>
         <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <CustomCard label_1="Expenses" label_2="(Current)" amount="30000" />
+          </Grid>
+
+          <Grid item xs={4}>
+            <CustomCard
+              label_1="Expenses"
+              label_2="(Exp 2019)"
+              amount="15000"
+            />
+          </Grid>
+
+          <Grid item xs={4}>
+            <CustomCard
+              label_1="Expenses"
+              label_2="(Exp 2020)"
+              amount="50000"
+            />
+          </Grid>
           <Grid item xs={12}>
             <Card style={{ height: "300x" }}>
               <div style={myStyles}>
@@ -299,16 +319,7 @@ export default class hospitalChart extends Component {
           </Grid>
           <Grid item xs={4}>
             <Card style={{ height: "250px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginLeft: "15px",
-                  marginRight: "15px",
-                  marginTop: "3px",
-                  marginBottom: "3px"
-                }}
-              >
+              <div style={myStyles}>
                 <Typography variant="h6">Gender</Typography>
                 <Select />
               </div>
