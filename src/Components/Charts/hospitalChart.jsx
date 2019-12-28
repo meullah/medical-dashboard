@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Line, Pie, Bar } from "react-chartjs-2";
+import { Line, Doughnut, Bar } from "react-chartjs-2";
 import { Grid, Typography, ButtonGroup } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
@@ -273,9 +273,30 @@ export default class hospitalChart extends Component {
           </Grid>
           <Grid item xs={4}>
             <Card style={{ height: "250px" }}>
-              <CardContent style={{ marginLeft: "40px" }}>
-                <Pie
-                  height="220px"
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  marginTop: "3px",
+                  marginBottom: "3px"
+                }}
+              >
+                <Typography variant="h6">Gender</Typography>
+                <ButtonGroup
+                  variant="text"
+                  color="primary"
+                  aria-label="text primary button group"
+                >
+                  <Button selected>1 Month</Button>
+                  <Button>6 Month</Button>
+                  <Button>1 Year</Button>
+                </ButtonGroup>
+              </div>
+              <CardContent>
+                <Doughnut
+                  height="150px"
                   data={this.state.GenderChart}
                   options={{
                     responsive: true,
