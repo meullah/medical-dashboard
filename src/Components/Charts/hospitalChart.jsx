@@ -137,7 +137,7 @@ export default class hospitalChart extends Component {
               2663,
               1485
             ],
-            borderColor: "#1f8ef1",
+            borderColor: "#d048b6",
             borderWidth: 2
           }
         ]
@@ -184,9 +184,9 @@ export default class hospitalChart extends Component {
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
       var gradient = ctx.createLinearGradient(0, 230, 0, 50);
-      gradient.addColorStop(1, "rgba(29,140,248,0.2)");
-      gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
-      gradient.addColorStop(0, "rgba(29,140,248,0)");
+      gradient.addColorStop(1, "rgba(72,72,176,0.1)");
+      gradient.addColorStop(0.4, "rgba(72,72,176,0.0)");
+      gradient.addColorStop(0, "rgba(119,52,169,0)");
 
       data.datasets.backgroundColor = gradient;
       data.datasets.forEach(set => {
