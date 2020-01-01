@@ -51,11 +51,7 @@ export default class hospitalChart extends Component {
           {
             label: "Total Patients",
             data: [2300, 3000, 500],
-            backgroundColor: [
-              "rgba(24,0,50,0.5)",
-              "rgba(24,178,255,0.5)",
-              "rgba(255,178,000,0.5)"
-            ]
+            backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"]
           }
         ]
       },
@@ -65,11 +61,7 @@ export default class hospitalChart extends Component {
           {
             label: "Total Patients",
             data: [2300, 3000, 500],
-            backgroundColor: [
-              "rgba(24,0,50,0.5)",
-              "rgba(24,178,255,0.5)",
-              "rgba(255,178,000,0.5)"
-            ]
+            backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"]
           }
         ]
       },
@@ -216,7 +208,7 @@ export default class hospitalChart extends Component {
               label_2="Today"
               amount="30000"
               trend="+15%"
-              data={[300, 100, 70, 80, 120, 80, 500, 160, 90, 150, 180, 200]}
+              data={[250, 322, 644, 190, 991, 502, 755, 501, 534, 237, 83, 313]}
               borderColor="#1f8ef1"
               backgroundColor="rgba(29,140,248,0.2)"
             />
@@ -228,7 +220,7 @@ export default class hospitalChart extends Component {
               label_2="(Exp 2019)"
               amount="15000"
               trend="-5%"
-              data={[300, 100, 0, 0, 0, 80, 500, 160, 90, 150, 180, 200]}
+              data={[709, 144, 149, 522, 40, 125, 62, 268, 826, 755, 106, 773]}
               borderColor="#d048b6"
               backgroundColor="rgba(72,72,176,0.1)"
             />
@@ -240,7 +232,20 @@ export default class hospitalChart extends Component {
               label_2="(Exp 2020)"
               amount="50000"
               trend="+30%"
-              data={[300, 100, 70, 80, 120, 80, 500, 160, 90, 150, 180, 200]}
+              data={[
+                107,
+                845,
+                129,
+                474,
+                685,
+                304,
+                146,
+                687,
+                574,
+                569,
+                782,
+                740
+              ]}
               borderColor="#00d6b4"
               backgroundColor="rgba(66,134,121,0.15)"
             />

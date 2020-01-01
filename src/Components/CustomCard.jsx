@@ -29,7 +29,8 @@ class CustomCard extends Component {
             data: props.data,
             borderColor: props.borderColor,
             backgroundColor: props.backgroundColor,
-            pointRadius: "0"
+            pointRadius: "0",
+            borderWidth: 2
           }
         ]
       }
