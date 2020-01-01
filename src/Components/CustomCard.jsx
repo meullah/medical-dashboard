@@ -10,25 +10,25 @@ class CustomCard extends Component {
     this.state = {
       data: {
         labels: [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC"
+          "Jan",
+          "Feb",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
         ],
         datasets: [
           {
             label: "Total Expenses",
-            data: [0, 0, 500, 0, 0, 0, 100, 25, 75, 0, 0, 0, 500, 0, 500, 500],
-            borderColor: "rgb(97, 1, 107)",
-            backgroundColor: "#fff",
+            data: props.data,
+            borderColor: props.borderColor,
+            backgroundColor: props.backgroundColor,
             pointRadius: "0"
           }
         ]
@@ -38,34 +38,44 @@ class CustomCard extends Component {
   render() {
     return (
       <div>
-        <Card style={{ height: "115px" }}>
+        <Card style={{ height: "auto" }}>
           <CardContent>
             <Grid container spacing={1}>
               <Grid item xs={6}>
-                <Typography variant="h6" style={{ float: "inherit" }}>
+                <Typography
+                  variant="h6"
+                  style={{ float: "inherit", marginLeft: "8px" }}
+                >
                   {this.props.label_1}
                 </Typography>
-                {/* <br /> */}
-                <Typography variant="h7" style={{ float: "inherit" }}>
-                  {this.props.label_2}
+
+                <Typography
+                  variant="h6"
+                  style={{ float: "inherit", marginLeft: "8px" }}
+                >
+                  PKR: {this.props.amount}
                 </Typography>
               </Grid>
 
               <Grid item xs={6}>
-                {/* style={{ float: "right" }} */}
                 <Typography variant="h6" style={{ float: "right" }}>
-                  PKR: {this.props.amount}
+                  {this.props.label_2}
                 </Typography>
 
-                <br />
-
-                {/* <Card style={{ height: "auto" }} boxshadow="0">
-                  <CardContent> */}
-
+                <Typography
+                  variant="h6"
+                  style={{ float: "right", clear: "right" }}
+                >
+                  {this.props.trend}
+                </Typography>
+              </Grid>
+              <br />
+              <Grid item xs={12}>
+                {/* <CardContent> */}
                 <div>
                   <Line
                     //width="8px"
-                    height="40px"
+                    height="60px"
                     options={{
                       legend: {
                         display: false
@@ -117,8 +127,7 @@ class CustomCard extends Component {
                     data={this.state.data}
                   />
                 </div>
-                {/* </CardContent>
-                </Card> */}
+                {/* </CardContent> */}
               </Grid>
             </Grid>
           </CardContent>
