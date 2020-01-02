@@ -51,7 +51,8 @@ export default class hospitalChart extends Component {
           {
             label: "Total Patients",
             data: [2300, 3000, 500],
-            backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"]
+            backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"],
+            pointStyle: "cross"
           }
         ]
       },
@@ -409,7 +410,10 @@ export default class hospitalChart extends Component {
                     responsive: true,
                     legend: {
                       position: "right",
-                      align: "middle"
+                      align: "middle",
+                      labels: {
+                        usePointStyle: true
+                      }
                     }
                   }}
                 />
