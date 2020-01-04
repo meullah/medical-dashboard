@@ -59,34 +59,18 @@ export default class patientChart extends Component {
       },
       departmentalExpensesChart: {
         labels: [
-          "Admissions",
-          "Anesthetics",
-          "Burn Center",
-          "Cardiology",
-          "Chaplaincy",
-          "Imaging",
-          "Emergency",
-          "Gastroenterology",
-          "General",
-          "Surgery",
-          "Gynecology",
-          "Haematology",
-          "ICU",
-          "Infection",
-          "Maternity",
-          "Microbiology",
-          "Neonatal",
-          "Nephrology",
-          "Neurology",
-          "Obstetrics",
-          "Therapy",
-          "Oncology",
-          "Ophthalmology",
-          "Orthopaedics",
-          "Otolaryngology",
-          "Physiotherapy",
-          "Radiology",
-          "Radiotherapy"
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC"
         ],
         datasets: [
           {
@@ -321,15 +305,6 @@ export default class patientChart extends Component {
             <Card style={{ height: "320px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Monthly Visits</Typography>
-                <ButtonGroup
-                  variant="contained"
-                  color="primary"
-                  aria-label="contained primary button group"
-                >
-                  <Button selected>1 Month</Button>
-                  <Button>6 Month</Button>
-                  <Button>1 Year</Button>
-                </ButtonGroup>
               </div>
               <CardContent>
                 <Bar
