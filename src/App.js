@@ -6,6 +6,7 @@ import DoctorChart from "./Components/Charts/doctorsChart";
 import HospitalChart from "./Components/Charts/hospitalChart";
 import LaboratoryChart from "./Components/Charts/laboratoryChart";
 import PharmacyChart from "./Components/Charts/pharmacyChart";
+import PatientChart from "./Components/Charts/patientChart";
 import axios from "axios";
 function App() {
   const [data, setData] = useState(0);
@@ -21,13 +22,14 @@ function App() {
   return (
     <Router>
       <Drawer>
-        <Route path="/doctorChart" exact>
+        {/* <Route path="/doctorChart" exact>
           <DoctorChart data={data} />
         </Route>
         <Route path="/hospitalChart" exact component={HospitalChart} />
         <Route path="/" exact component={HospitalChart} />
         <Route path="/laboratotyChart" exact component={LaboratoryChart} />
-        <Route path="/pharmacyChart" exact component={PharmacyChart} />
+        <Route path="/pharmacyChart" exact component={PharmacyChart} /> */}
+        <PatientChart />
       </Drawer>
     </Router>
   );
