@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Popup from "reactjs-popup";
 import "./popUp.css";
 import Select from "../Select/select";
-import CustomCard from "../CustomCard";
 
 export default class patientChart extends Component {
   constructor(props) {
