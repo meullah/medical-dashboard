@@ -25,8 +25,8 @@ function App() {
         <Route path="/doctorChart" exact>
           <DoctorChart data={data} />
         </Route>
-        <Route path="/hospitalChart" exact component={PatientChart} />
-        <Route path="/" exact component={HospitalChart} />
+        <Route path="/hospitalChart" exact component={HospitalChart} />
+        <Route path="/" exact component={PatientChart} />
         <Route path="/laboratotyChart" exact component={LaboratoryChart} />
         <Route path="/pharmacyChart" exact component={PharmacyChart} />
       </Drawer>
