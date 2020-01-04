@@ -363,7 +363,7 @@ export default class patientChart extends Component {
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <Card style={{ height: "300px" }}>
+            <Card style={{ height: "320px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Spendings</Typography>
                 <Select />
