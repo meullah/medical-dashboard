@@ -22,14 +22,13 @@ function App() {
   return (
     <Router>
       <Drawer>
-        {/* <Route path="/doctorChart" exact>
+        <Route path="/doctorChart" exact>
           <DoctorChart data={data} />
         </Route>
-        <Route path="/hospitalChart" exact component={HospitalChart} />
+        <Route path="/hospitalChart" exact component={PatientChart} />
         <Route path="/" exact component={HospitalChart} />
         <Route path="/laboratotyChart" exact component={LaboratoryChart} />
-        <Route path="/pharmacyChart" exact component={PharmacyChart} /> */}
-        <PatientChart />
+        <Route path="/pharmacyChart" exact component={PharmacyChart} />
       </Drawer>
     </Router>
   );
