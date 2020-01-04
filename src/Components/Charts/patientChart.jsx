@@ -178,58 +178,10 @@ export default class patientChart extends Component {
     return (
       <div>
         <Grid container spacing={2}>
-          {/* <Grid item xs={4}>
-            <CustomCard
-              label_1="Expenses"
-              label_2="Today"
-              amount="30000"
-              trend="+15%"
-              data={[250, 322, 644, 190, 991, 502, 755, 501, 534, 237, 83, 313]}
-              borderColor="#1f8ef1"
-              backgroundColor="rgba(29,140,248,0.2)"
-            />
-          </Grid>
-
-          <Grid item xs={4}>
-            <CustomCard
-              label_1="Expenses"
-              label_2="(Exp 2019)"
-              amount="15000"
-              trend="-5%"
-              data={[709, 144, 149, 522, 40, 125, 62, 268, 826, 755, 106, 773]}
-              borderColor="#d048b6"
-              backgroundColor="rgba(72,72,176,0.1)"
-            />
-          </Grid>
-
-          <Grid item xs={4}>
-            <CustomCard
-              label_1="Expenses"
-              label_2="(Exp 2020)"
-              amount="50000"
-              trend="+30%"
-              data={[
-                107,
-                845,
-                129,
-                474,
-                685,
-                304,
-                146,
-                687,
-                574,
-                569,
-                782,
-                740
-              ]}
-              borderColor="#00d6b4"
-              backgroundColor="rgba(66,134,121,0.15)"
-            />
-          </Grid> */}
           <Grid item xs={12}>
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
-                <Typography variant="h6">Yearly Transaction</Typography>
+                <Typography variant="h6">Yearly Amount</Typography>
                 <Button
                   onClick={this.openMoal}
                   variant="contained"
@@ -370,7 +322,7 @@ export default class patientChart extends Component {
               </div>
               <CardContent>
                 <Doughnut
-                  height="150px"
+                  height="75px"
                   data={this.state.GenderChart}
                   options={{
                     responsive: true,
@@ -388,6 +340,75 @@ export default class patientChart extends Component {
           </Grid>
         </Grid>
         {/* POP UP Component */}
+
+        <Popup
+          open={this.state.open}
+          closeOnDocumentClick
+          onClose={this.closeModal}
+          modal
+        >
+          <Card>
+            <div style={myStyles}>
+              <Typography variant="h6">Prediction</Typography>
+              <ButtonGroup
+                variant="text"
+                color="primary"
+                aria-label="text primary button group"
+              >
+                <Button selected>1 Month</Button>
+                <Button>6 Month</Button>
+                <Button>1 Year</Button>
+              </ButtonGroup>
+            </div>
+            <CardContent>
+              <Line
+                height="220px"
+                options={{
+                  legend: {
+                    display: false
+                  },
+                  tooltips: {
+                    bodySpacing: 4,
+                    mode: "nearest",
+                    intersect: 0,
+                    position: "nearest",
+                    xPadding: 10,
+                    yPadding: 10,
+                    caretPadding: 10
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                    yAxes: [
+                      {
+                        ticks: {
+                          // max: 130,
+                          beginAtZero: true
+                          // stepSize: 10
+                        },
+                        gridLines: {
+                          display: false
+                        },
+                        scaleLabel: {
+                          display: true,
+                          labelString: "Total Expenses"
+                        }
+                      }
+                    ],
+                    xAxes: [
+                      {
+                        gridLines: {
+                          display: false
+                        }
+                      }
+                    ]
+                  }
+                }}
+                data={this.getChartData}
+              />
+            </CardContent>
+          </Card>
+        </Popup>
       </div>
     );
   }
