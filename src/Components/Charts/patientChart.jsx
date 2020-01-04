@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Line, Doughnut, Bar } from "react-chartjs-2";
+import { Line, Doughnut, Bar, Bubble } from "react-chartjs-2";
 import { Grid, Typography, ButtonGroup } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
@@ -53,6 +53,50 @@ export default class patientChart extends Component {
             data: [2300, 3000],
             backgroundColor: ["#1f8ef1", "#d048b6"],
             pointStyle: "cross"
+          }
+        ]
+      },
+      bubbleChart: {
+        labels: ["Scatter"],
+        yLabels: ["Mon", "Tue", "wed", "Thu", "Fri", "SAT", "SUN"],
+        xLabels: [
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC"
+        ],
+
+        datasets: [
+          {
+            label: "My First dataset",
+            fill: false,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 10,
+            pointHitRadius: 10,
+            data: [
+              { x: 0, y: 75, r: 10 },
+              { x: 1, y: 49, r: 10 },
+              { x: 2, y: 90, r: 150 },
+              { x: 3, y: 29, r: 30 },
+              { x: 4, y: 36, r: 10 },
+              { x: 5, y: 25, r: 50 },
+              { x: 6, y: 18, r: 16 }
+            ]
           }
         ]
       },
@@ -133,6 +177,21 @@ export default class patientChart extends Component {
   }
   getChartData = canvas => {
     const data = this.state.data;
+    if (data.datasets) {
+      const ctx = canvas.getContext("2d");
+      var gradient = ctx.createLinearGradient(0, 230, 0, 50);
+
+      gradient.addColorStop(1, "rgba(29,140,248,0.2)");
+      gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
+      gradient.addColorStop(0, "rgba(29,140,248,0)");
+      data.datasets.forEach(set => {
+        set.backgroundColor = gradient;
+      });
+    }
+    return data;
+  };
+  getBubbleChartData = canvas => {
+    const data = this.state.bubbleChart;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
       var gradient = ctx.createLinearGradient(0, 230, 0, 50);
@@ -321,7 +380,7 @@ export default class patientChart extends Component {
               </div>
               <CardContent>
                 <Doughnut
-                  height="75px"
+                  height="125px"
                   data={this.state.GenderChart}
                   options={{
                     responsive: true,
@@ -337,7 +396,60 @@ export default class patientChart extends Component {
               </CardContent>
             </Card>
           </Grid>
+          <Grid item xs={12}>
+            <Card style={{ height: "auto" }}>
+              <div style={myStyles}>
+                <Typography variant="h6">Bubble</Typography>
+              </div>
+              <CardContent>
+                <Bubble
+                  ref="chart"
+                  height="500px"
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                      yAxes: [
+                        {
+                          barPercentage: 1.6,
+                          type: "category",
+                          gridLines: {
+                            drawBorder: false,
+                            color: "rgba(29,140,248,0.0)",
+                            zeroLineColor: "transparent"
+                          },
+                          ticks: {
+                            suggestedMin: 60,
+                            suggestedMax: 125,
+                            padding: 20,
+                            fontColor: "#9a9a9a"
+                          }
+                        }
+                      ],
+                      xAxes: [
+                        {
+                          type: "category",
+                          barPercentage: 1.6,
+                          gridLines: {
+                            drawBorder: false,
+                            color: "rgba(29,140,248,0.1)",
+                            zeroLineColor: "transparent"
+                          },
+                          ticks: {
+                            padding: 20,
+                            fontColor: "#9a9a9a"
+                          }
+                        }
+                      ]
+                    }
+                  }}
+                  data={this.getBubbleChartData}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
+
         {/* POP UP Component */}
 
         <Popup
