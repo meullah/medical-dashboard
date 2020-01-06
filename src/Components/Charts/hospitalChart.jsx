@@ -8,12 +8,13 @@ import Popup from "reactjs-popup";
 import "./popUp.css";
 import Select from "../Select/select";
 import CustomCard from "../CustomCard";
+import Carousel from "../Craousel/Mui_Craousel";
+
 export default class hospitalChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      openMorePopUp: false,
       data: {
         labels: [
           "JAN",
@@ -52,7 +53,7 @@ export default class hospitalChart extends Component {
             label: "Total Patients",
             data: [2300, 3000, 500],
             backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"],
-            pointStyle: "cross"
+            pointStyle: "line"
           }
         ]
       },
@@ -142,20 +143,12 @@ export default class hospitalChart extends Component {
     };
     this.openMoal = this.openMoal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.openPopUp_more = this.openPopUp_more.bind(this);
-    this.closePopUp_more = this.closePopUp_more.bind(this);
   }
   openMoal() {
     this.setState({ open: true });
   }
   closeModal() {
     this.setState({ open: false });
-  }
-  openPopUp_more() {
-    this.setState({ openMorePopUp: true });
-  }
-  closePopUp_more() {
-    this.setState({ openMorePopUp: false });
   }
   getChartData = canvas => {
     const data = this.state.data;
@@ -443,29 +436,16 @@ export default class hospitalChart extends Component {
           </Grid>
           <Grid item xs={4}>
             <Card style={{ height: "300px" }}>
-              <div style={myStyles}>
-                <Typography variant="h6">Trending Services</Typography>
-                <Button
-                  onClick={this.openPopUp_more}
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    float: "right",
-                    marginRight: "12px",
-                    marginBottom: "5px"
-                  }}
-                >
-                  more
-                </Button>
-              </div>
               <CardContent>
-                {this.state.recomendedServices.services.map((el, index) => (
-                  <h4 key={index}>
-                    {index + 1}. {el}
-                  </h4>
-                ))}
+                <Carousel />
               </CardContent>
             </Card>
+
+            {/* {this.state.recomendedServices.services.map((el, index) => (
+                    <p key={index}>
+                      {index + 1}. {el}
+                    </p>
+                  ))} */}
           </Grid>
         </Grid>
         {/* POP UP Component */}
@@ -481,6 +461,7 @@ export default class hospitalChart extends Component {
               <ButtonGroup
                 variant="text"
                 color="primary"
+                n
                 aria-label="text primary button group"
               >
                 <Button selected>1 Month</Button>
@@ -534,62 +515,6 @@ export default class hospitalChart extends Component {
                 }}
                 data={this.getChartData}
               />
-            </CardContent>
-          </Card>
-        </Popup>
-        <Popup
-          open={this.state.openMorePopUp}
-          closeOnDocumentClick
-          onClose={this.closePopUp_more}
-          modal
-        >
-          <Card>
-            <CardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <Card>
-                    <div style={myStyles}>
-                      <Typography variant="h6">Doctors</Typography>
-                      <Select />
-                    </div>
-                    <CardContent>
-                      {this.state.recomendedServices.services.map(
-                        (el, index) => (
-                          <h4 key={index}>
-                            {index + 1}. {el}
-                          </h4>
-                        )
-                      )}
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={4}>
-                  <Card>
-                    <CardContent>
-                      {this.state.recomendedServices.services.map(
-                        (el, index) => (
-                          <h4 key={index}>
-                            {index + 1}. {el}
-                          </h4>
-                        )
-                      )}
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={4}>
-                  <Card>
-                    <CardContent>
-                      {this.state.recomendedServices.services.map(
-                        (el, index) => (
-                          <h4 key={index}>
-                            {index + 1}. {el}
-                          </h4>
-                        )
-                      )}
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
             </CardContent>
           </Card>
         </Popup>
