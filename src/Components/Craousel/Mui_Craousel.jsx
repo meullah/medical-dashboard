@@ -14,23 +14,48 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const tutorialSteps = [
   {
     label: "Services",
-    data: ["abc", "xyz", "abc", "x-ray"]
+    data: [
+      "X-Ray/radiology",
+      "General and Specialty Surgical",
+      "Short-term Hospitalization",
+      "Physical Therapy and Rehabilitation"
+    ]
   },
   {
     label: "Tending Doctors",
-    data: ["abc", "xyz", "abc", "x-ray"]
+    data: [
+      "Dr. Zafar Iqbal",
+      "Dr. Syed Hamid Ali Nasr",
+      "Dr. Nadia Aman",
+      "Dr. M. Nasir Ayub Khan"
+    ]
   },
   {
     label: "Trending serices",
-    data: ["abc", "xyz", "abc", "x-ray"]
+    data: [
+      "Mental Health and Drug Treatment",
+      "Dental Care",
+      "X-Ray/radiology",
+      "Physical Therapy and Rehabilitation"
+    ]
   },
   {
     label: "Active Doctors",
-    data: ["abc", "xyz", "abc", "x-ray"]
+    data: [
+      "Brig (R). Muhammad Zameer Rajput",
+      "Dr. M. Nasir Ayub Khan",
+      "Dr. Saad Ahmad Naveed",
+      "Dr. Naheed fatima"
+    ]
   },
   {
     label: "Active Patients ",
-    data: ["abc", "xyz", "abc", "x-ray"]
+    data: [
+      "Shayan Shahid Ansari",
+      "Mohammad Amin",
+      "Muhammad Ashraf",
+      "Mohammad Zafar Rabbani"
+    ]
   }
 ];
 
@@ -47,7 +72,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.default
   },
   img: {
-    height: 180,
+    height: 170,
     display: "block",
     maxWidth: 400,
     overflow: "hidden",
@@ -84,11 +109,14 @@ function SwipeableTextMobileStepper() {
         enableMouseEvents
       >
         {tutorialSteps.map((step, index) => (
-          <div key={step.label}>
+          <div key={step.label} style={{ padding: "5px 30px" }}>
             {Math.abs(activeStep - index) <= 2 ? (
               <div className={classes.img}>
                 {step.data.map((item, index) => (
-                  <h4 key={index}>{item}</h4>
+                  <h4 key={index}>
+                    {index + 1 + ".   "}
+                    {item}
+                  </h4>
                 ))}
               </div>
             ) : null}
