@@ -15,6 +15,8 @@ export default class hospitalChart extends Component {
     super(props);
     this.state = {
       open: false,
+      value: null,
+      selectedOption: null,
       data: {
         labels: [
           "JAN",
@@ -165,6 +167,13 @@ export default class hospitalChart extends Component {
     }
     return data;
   };
+
+  handleChange = selectedOption => {
+    this.setState({ selectedOption }, () =>
+      console.log(`Option selected:`, this.state.selectedOption)
+    );
+  };
+
   getDepartmentalChartData = canvas => {
     const data = this.state.departmentalExpensesChart;
     if (data.datasets) {
@@ -183,6 +192,8 @@ export default class hospitalChart extends Component {
   };
 
   render() {
+    console.log(this.state.value);
+    // const { selectedOption } = this.state;
     const myStyles = {
       display: "flex",
       justifyContent: "space-between",
@@ -244,6 +255,7 @@ export default class hospitalChart extends Component {
               backgroundColor="rgba(66,134,121,0.15)"
             />
           </Grid>
+
           <Grid item xs={12}>
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
@@ -393,7 +405,14 @@ export default class hospitalChart extends Component {
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Gender</Typography>
-                <Select />
+
+                <Select
+                  onChange={e => {
+                    this.setState({
+                      value: e.target.value
+                    });
+                  }}
+                />
               </div>
               <CardContent>
                 <Doughnut
@@ -440,7 +459,6 @@ export default class hospitalChart extends Component {
                 <Carousel />
               </CardContent>
             </Card>
-
             {/* {this.state.recomendedServices.services.map((el, index) => (
                     <p key={index}>
                       {index + 1}. {el}
