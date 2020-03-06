@@ -6,18 +6,27 @@ import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import Popup from "reactjs-popup";
 import "./popUp.css";
-import Select from "../Select/select";
+import Select from "react-select";
 import CustomCard from "../CustomCard";
 import Carousel from "../Craousel/Mui_Craousel";
+
+let date = new Date();
+const options = [
+  { value: date.getFullYear() - 1, label: date.getFullYear() - 1 },
+  { value: date.getFullYear() - 2, label: date.getFullYear() - 2 },
+  { value: date.getFullYear() - 3, label: date.getFullYear() - 3 },
+  { value: date.getFullYear() - 4, label: date.getFullYear() - 4 },
+  { value: date.getFullYear() - 5, label: date.getFullYear() - 5 }
+];
 
 export default class hospitalChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      value: null,
+      // genderYear: null,
       selectedOption: null,
-      data: {
+      YearlyTransation: {
         labels: [
           "JAN",
           "FEB",
@@ -152,8 +161,8 @@ export default class hospitalChart extends Component {
   closeModal() {
     this.setState({ open: false });
   }
-  getChartData = canvas => {
-    const data = this.state.data;
+  getYearlyTransactionChartData = canvas => {
+    const data = this.state.YearlyTransation;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
       var gradient = ctx.createLinearGradient(0, 230, 0, 50);
@@ -167,13 +176,6 @@ export default class hospitalChart extends Component {
     }
     return data;
   };
-
-  handleChange = selectedOption => {
-    this.setState({ selectedOption }, () =>
-      console.log(`Option selected:`, this.state.selectedOption)
-    );
-  };
-
   getDepartmentalChartData = canvas => {
     const data = this.state.departmentalExpensesChart;
     if (data.datasets) {
@@ -190,10 +192,85 @@ export default class hospitalChart extends Component {
     }
     return data;
   };
+  get_Gender_Chart_Data = handle => {
+    // this.setState({ genderYear: handle.value });
+    // console.log("Handle Value", handle.value);
+    fetch(`http://localhost:5000/genderData_${handle.value}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        // console.log(data.genderCounts);
+        var previousStates = this.state.GenderChart.datasets[0];
+        previousStates.data = data.genderCounts;
+        // console.log(previousStates.data);
+        this.setState({ previousStates });
+        // console.log("new states", this.state.GenderChart.datasets[0].data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
+  get_Age_Group_Data = handle => {
+    // console.log("Handle Value", handle.value);
+    fetch(`http://localhost:5000/ageGroupData_${handle.value}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        // console.log(data.ageData);
+        var previousStates = this.state.AgeGroupChart.datasets[0];
+        previousStates.data = data.ageData;
+        // console.log(previousStates.data);
+        this.setState({ previousStates });
+        // console.log("new states", this.state.GenderChart.datasets[0].data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  getDepartmentsData = handle => {
+    console.log("Handle Value", handle.value);
+    fetch(`http://localhost:5000/departmentalExpensesData_${handle.value}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        // console.log(data.dept_exp_data);
+        var previousStates = this.state.departmentalExpensesChart.datasets[0];
+        previousStates.data = data.dept_exp_data.expenses; // data
+        this.setState({ previousStates });
+        // console.log(previousStates.data);
+        var another_previousState = this.state.departmentalExpensesChart;
+        another_previousState.labels = data.dept_exp_data.departments; // labels
+        this.setState({ another_previousState });
+        // console.log("new states", this.state.GenderChart.datasets[0].data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  get_yearly_transation_data = handle => {
+    console.log("Handle Value", handle.value);
+    // fetch(`http://localhost:5000/departmentalExpensesData_${handle.value}`)
+    //   .then(response => {
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log(data.dept_exp_data);
+    //     var previousStates = this.state.departmentalExpensesChart.datasets[0];
+    //     previousStates.data = data.dept_exp_data.expenses; // data
+    //     this.setState({ previousStates });
+    //     // console.log(previousStates.data);
+    //     console.log("new states", this.state.GenderChart.datasets[0].data);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+  };
   render() {
-    console.log(this.state.value);
-    // const { selectedOption } = this.state;
     const myStyles = {
       display: "flex",
       justifyContent: "space-between",
@@ -260,18 +337,25 @@ export default class hospitalChart extends Component {
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Amount Transaction</Typography>
-                <Button
-                  onClick={this.openMoal}
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    float: "right",
-                    marginRight: "12px",
-                    marginBottom: "5px"
-                  }}
-                >
-                  Prediction
-                </Button>
+                <div className="chart_menubar_1">
+                  <Select
+                    options={options}
+                    placeholder="Year..."
+                    onChange={this.get_yearly_transation_data}
+                  />
+                  <Button
+                    onClick={this.openMoal}
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      float: "right",
+                      marginRight: "12px",
+                      marginBottom: "5px"
+                    }}
+                  >
+                    Prediction
+                  </Button>
+                </div>
               </div>
               <CardContent>
                 <Line
@@ -326,24 +410,32 @@ export default class hospitalChart extends Component {
                       ]
                     }
                   }}
-                  data={this.getChartData}
+                  data={this.getYearlyTransactionChartData}
                 />
               </CardContent>
             </Card>
           </Grid>
+
           <Grid item xs={12}>
             <Card style={{ height: "320px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Departmental Expenses</Typography>
-                <ButtonGroup
-                  variant="contained"
-                  color="primary"
-                  aria-label="contained primary button group"
-                >
-                  <Button selected>1 Month</Button>
-                  <Button>6 Month</Button>
-                  <Button>1 Year</Button>
-                </ButtonGroup>
+                <div className="chart_menubar">
+                  <Select
+                    options={options}
+                    placeholder="Year..."
+                    onChange={this.getDepartmentsData}
+                  />
+                  <ButtonGroup
+                    variant="contained"
+                    color="primary"
+                    aria-label="contained primary button group"
+                  >
+                    <Button selected>1 Month</Button>
+                    <Button>6 Month</Button>
+                    <Button>1 Year</Button>
+                  </ButtonGroup>
+                </div>
               </div>
               <CardContent>
                 <Bar
@@ -407,11 +499,9 @@ export default class hospitalChart extends Component {
                 <Typography variant="h6">Gender</Typography>
 
                 <Select
-                  onChange={e => {
-                    this.setState({
-                      value: e.target.value
-                    });
-                  }}
+                  options={options}
+                  onChange={this.get_Gender_Chart_Data}
+                  placeholder="Year..."
                 />
               </div>
               <CardContent>
@@ -436,7 +526,11 @@ export default class hospitalChart extends Component {
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Age Group</Typography>
-                <Select />
+                <Select
+                  options={options}
+                  onChange={this.get_Age_Group_Data}
+                  placeholder="Year..."
+                />
               </div>
               <CardContent>
                 <Doughnut
@@ -446,7 +540,10 @@ export default class hospitalChart extends Component {
                     responsive: true,
                     legend: {
                       position: "right",
-                      align: "middle"
+                      align: "middle",
+                      labels: {
+                        usePointStyle: true
+                      }
                     }
                   }}
                 />

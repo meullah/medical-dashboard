@@ -2,3 +2,21 @@
   background: transparent !important;
   border: transparent !important;
 }
+
+/* With for Select */
+
+.css-2b097c-container {
+  width: 150px;
+}
+
+.chart_menubar {
+  display: flex;
+  justify-content: space-between;
+  width: 37%;
+}
+
+.chart_menubar_1 {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+}
