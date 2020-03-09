@@ -1,9 +1,9 @@
-import React, {useEffect } from "react";
+import React, { useEffect } from "react";
 // import React from "react"
 import { BrowserRouter as Router, Route } from "react-router-dom";
 // import Navbar from "./Components/Navbar/Navbar";
 import Drawer from "./Components/Drawer/Drawer";
-// import DoctorChart from "./Components/Charts/doctorsChart";
+import DoctorChart from "./Components/Charts/doctorsChart";
 import HospitalChart from "./Components/Charts/hospitalChart";
 import LaboratoryChart from "./Components/Charts/laboratoryChart";
 import PharmacyChart from "./Components/Charts/pharmacyChart";
@@ -24,7 +24,7 @@ function App() {
     <Router>
       <Drawer>
         <Route path="/doctorChart" exact>
-          {/* <DoctorChart data={data} /> */}
+          <DoctorChart />
         </Route>
         <Route path="/hospitalChart" exact component={HospitalChart} />
         <Route path="/" exact component={PatientChart} />

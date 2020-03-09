@@ -195,7 +195,7 @@ export default class hospitalChart extends Component {
   get_Gender_Chart_Data = handle => {
     // this.setState({ genderYear: handle.value });
     // console.log("Handle Value", handle.value);
-    fetch(`http://localhost:5000/genderData_${handle.value}`)
+    fetch(`http://localhost:5000/genderData/year/${handle.value}`)
       .then(response => {
         return response.json();
       })
@@ -214,7 +214,7 @@ export default class hospitalChart extends Component {
 
   get_Age_Group_Data = handle => {
     // console.log("Handle Value", handle.value);
-    fetch(`http://localhost:5000/ageGroupData_${handle.value}`)
+    fetch(`http://localhost:5000/ageGroupData/year/${handle.value}`)
       .then(response => {
         return response.json();
       })
@@ -233,7 +233,7 @@ export default class hospitalChart extends Component {
 
   getDepartmentsData = handle => {
     console.log("Handle Value", handle.value);
-    fetch(`http://localhost:5000/departmentalExpensesData_${handle.value}`)
+    fetch(`http://localhost:5000/departmentalExpensesData/year/${handle.value}`)
       .then(response => {
         return response.json();
       })
@@ -253,22 +253,22 @@ export default class hospitalChart extends Component {
       });
   };
   get_yearly_transation_data = handle => {
-    console.log("Handle Value", handle.value);
-    // fetch(`http://localhost:5000/departmentalExpensesData_${handle.value}`)
-    //   .then(response => {
-    //     return response.json();
-    //   })
-    //   .then(data => {
-    //     console.log(data.dept_exp_data);
-    //     var previousStates = this.state.departmentalExpensesChart.datasets[0];
-    //     previousStates.data = data.dept_exp_data.expenses; // data
-    //     this.setState({ previousStates });
-    //     // console.log(previousStates.data);
-    //     console.log("new states", this.state.GenderChart.datasets[0].data);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    // console.log("Handle Value", handle.value);
+    fetch(`http://localhost:5000/yearlyTransactionData/year/${handle.value}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        // console.log(data.yearlyTransaction);
+        var previousStates = this.state.YearlyTransation.datasets[0]; // Y capital
+        previousStates.data = data.yearlyTransaction; // data
+        this.setState({ previousStates });
+        // console.log(previousStates.data);
+        // console.log("new states", this.state.GenderChart.datasets[0].data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   render() {
     const myStyles = {

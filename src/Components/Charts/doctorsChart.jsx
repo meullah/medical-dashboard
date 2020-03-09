@@ -14,8 +14,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Popup from "reactjs-popup";
 import "./popUp.css";
-// import Select from "../Select/select";
-
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -419,18 +417,9 @@ export default class doctorsChart extends Component {
           </Grid>
           <Grid item xs={6}>
             <Card style={{ height: "320px" }}>
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
-                  <div style={myStyles}>
-                    <Typography variant="h6">Patients</Typography>
-                  </div>
-                </Grid>
-                <Grid item xs={6}>
-                  <div style={myStyles}>
-                    <Typography variant="h6">Patients</Typography>
-                  </div>
-                </Grid>
-              </Grid>
+              <div style={myStyles}>
+                <Typography variant="h6">Patients by age / gender</Typography>
+              </div>
 
               <CardContent>
                 <Bar
