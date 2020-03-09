@@ -6,28 +6,24 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
-// import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from "@material-ui/icons/Search";
 import Badge from "@material-ui/core/Badge";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import "./drawer.css";
 import imgDoctor from "../../Images/Doctor.svg";
-import imgPharmacy from "../../Images/Pharmacy.svg";
 import imgHospital from "../../Images/Hospital.svg";
 import imgLaboratoy from "../../Images/Laboratory.svg";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 
 const drawerWidth = 200;
 
@@ -124,14 +120,17 @@ const useStyles = makeStyles(theme => ({
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open] = React.useState(false);
+  const [title, setTitle] = React.useState("Hospital Data");
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleHospitalTitle = () => {
+    setTitle("Hospital Data");
   };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDoctorTitle = () => {
+    setTitle("Doctors Data");
+  };
+  const handlePatientsTitle = () => {
+    setTitle("Patients Data");
   };
 
   return (
@@ -145,36 +144,20 @@ export default function MiniDrawer(props) {
         })}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
           <div style={{ width: "100%" }}>
             <Box display="flex">
               <Box flexGrow={1}>
                 <div
-                  className={classes.search}
-                  style={{ marginTop: "1vh" }}
+                  // className={classes.search}
+                  style={{
+                    marginTop: "1vh",
+                    display: "flex",
+                    justifyContent: "space-between"
+                  }}
                   flexGrow={1}
                 >
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput
-                    }}
-                    inputProps={{ "aria-label": "search" }}
-                  />
+                  <p>{title}</p>
+                  <Select />
                 </div>
               </Box>
               <Box>
@@ -213,7 +196,7 @@ export default function MiniDrawer(props) {
         open={open}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -224,7 +207,7 @@ export default function MiniDrawer(props) {
         <Divider />
         <List>
           <Link to="/hospitalChart">
-            <ListItem button>
+            <ListItem button onClick={handleHospitalTitle}>
               <ListItemIcon>
                 <img
                   className="SearchImage"
@@ -232,12 +215,13 @@ export default function MiniDrawer(props) {
                   alt="imageNotFound"
                 ></img>
               </ListItemIcon>
+
               <ListItemText primary="Hospital" style={{ marginLeft: "10px" }} />
             </ListItem>
           </Link>
           <Divider />
           <Link to="/doctorChart">
-            <ListItem button>
+            <ListItem button onClick={handleDoctorTitle}>
               <ListItemIcon>
                 <img
                   className="SearchImage"
@@ -245,12 +229,13 @@ export default function MiniDrawer(props) {
                   alt="imageNotFound"
                 ></img>
               </ListItemIcon>
+
               <ListItemText primary="Doctors" style={{ marginLeft: "10px" }} />
             </ListItem>
           </Link>
           <Divider />
-          <Link to="/laboratotyChart">
-            <ListItem button>
+          <Link to="/PatientChart">
+            <ListItem button onClick={handlePatientsTitle}>
               <ListItemIcon>
                 <img
                   className="SearchImage"
@@ -258,23 +243,7 @@ export default function MiniDrawer(props) {
                   alt="imageNotFound"
                 ></img>
               </ListItemIcon>
-              <ListItemText
-                primary="Laboratory"
-                style={{ marginLeft: "10px" }}
-              />
-            </ListItem>
-          </Link>
-          <Divider />
-          <Link to="/pharmacyChart">
-            <ListItem button>
-              <ListItemIcon>
-                <img
-                  className="SearchImage"
-                  src={imgPharmacy}
-                  alt="imageNotFound"
-                ></img>
-              </ListItemIcon>
-              <ListItemText primary="Pharmacy" style={{ marginLeft: "10px" }} />
+              <ListItemText primary="Patients" style={{ marginLeft: "10px" }} />
             </ListItem>
           </Link>
         </List>
