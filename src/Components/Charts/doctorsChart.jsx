@@ -1,54 +1,54 @@
 import React, { Component } from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import { Line, Bar, Bubble } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import { Grid, Typography, ButtonGroup } from "@material-ui/core";
+// import Table from "@material-ui/core/Table";
 import Card from "@material-ui/core/Card";
-import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+// import TableCell from "@material-ui/core/TableCell";
+// import TableBody from "@material-ui/core/TableBody";
+// import TableContainer from "@material-ui/core/TableContainer";
+// import TableHead from "@material-ui/core/TableHead";
+// import Paper from "@material-ui/core/Paper";
+// import TableRow from "@material-ui/core/TableRow";
 import Popup from "reactjs-popup";
+import Select from "react-select";
 import "./popUp.css";
-const StyledTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
-  },
-  body: {
-    fontSize: 14
-  }
-}))(TableCell);
+// const StyledTableCell = withStyles(theme => ({
+//   head: {
+//     backgroundColor: theme.palette.common.black,
+//     color: theme.palette.common.white
+//   },
+//   body: {
+//     fontSize: 14
+//   }
+// }))(TableCell);
 
-const StyledTableRow = withStyles(theme => ({
-  root: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.background.default
-    }
-  }
-}))(TableRow);
+// const StyledTableRow = withStyles(theme => ({
+//   root: {
+//     "&:nth-of-type(odd)": {
+//       backgroundColor: theme.palette.background.default
+//     }
+//   }
+// }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+// function createData(name, calories, fat, carbs, protein) {
+//   return { name, calories, fat, carbs, protein };
+// }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-];
+// const rows = [
+//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+//   createData("Eclair", 262, 16.0, 24, 6.0),
+//   createData("Cupcake", 305, 3.7, 67, 4.3),
+//   createData("Gingerbread", 356, 16.0, 49, 3.9)
+// ];
 
-const classes = makeStyles({
-  table: {
-    minWidth: 700
-  }
-});
+// const classes = makeStyles({
+//   table: {
+//     minWidth: 700
+//   }
+// });
 
 export default class doctorsChart extends Component {
   constructor(props) {
@@ -283,21 +283,24 @@ export default class doctorsChart extends Component {
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Patients/Month</Typography>
-                <Button
-                  onClick={this.openMoal}
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    float: "right",
-                    marginRight: "12px",
-                    marginBottom: "5px"
-                  }}
-                >
-                  Prediction
-                </Button>
+                <div className="chart_menubar_1">
+                  <Select />
+                  <Button
+                    onClick={this.openMoal}
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      float: "right",
+                      marginRight: "12px",
+                      marginBottom: "5px"
+                    }}
+                  >
+                    Prediction
+                  </Button>
+                </div>
               </div>
               <CardContent>
-                <Line
+                <Bar
                   // width="100vw"
                   height="220px"
                   options={{
@@ -319,11 +322,8 @@ export default class doctorsChart extends Component {
                     scales: {
                       yAxes: [
                         {
-                          barPercentage: 1.6,
                           gridLines: {
-                            drawBorder: false,
-                            color: "rgba(29,140,248,0.0)",
-                            zeroLineColor: "transparent"
+                            display: false
                           },
                           ticks: {
                             suggestedMin: 60,
@@ -335,11 +335,8 @@ export default class doctorsChart extends Component {
                       ],
                       xAxes: [
                         {
-                          barPercentage: 1.6,
                           gridLines: {
-                            drawBorder: false,
-                            color: "rgba(29,140,248,0.1)",
-                            zeroLineColor: "transparent"
+                            display: false
                           },
                           ticks: {
                             padding: 20,
@@ -477,7 +474,7 @@ export default class doctorsChart extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Card style={{ height: "auto" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Bubble</Typography>
@@ -528,8 +525,8 @@ export default class doctorsChart extends Component {
                 />
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xs={12}>
+          </Grid> */}
+          {/* <Grid item xs={12}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
@@ -560,7 +557,7 @@ export default class doctorsChart extends Component {
                 </TableBody>
               </Table>
             </TableContainer>
-          </Grid>
+          </Grid> */}
         </Grid>
 
         {/* POP UP Component */}

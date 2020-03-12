@@ -122,15 +122,22 @@ export default function MiniDrawer(props) {
   const theme = useTheme();
   const [open] = React.useState(false);
   const [title, setTitle] = React.useState("Hospital Data");
+  const [showSelect, setShowSelect] = React.useState(false);
+  const [placeholder, setPlaceholder] = React.useState("none");
 
   const handleHospitalTitle = () => {
     setTitle("Hospital Data");
+    setShowSelect(false);
   };
   const handleDoctorTitle = () => {
     setTitle("Doctors Data");
+    setShowSelect(true);
+    setPlaceholder("Select Doctor ID");
   };
   const handlePatientsTitle = () => {
     setTitle("Patients Data");
+    setShowSelect(true);
+    setPlaceholder("Select Patient ID");
   };
 
   return (
@@ -156,8 +163,8 @@ export default function MiniDrawer(props) {
                   }}
                   flexGrow={1}
                 >
-                  <p>{title}</p>
-                  <Select />
+                  <p style={{ margin: "0px", fontSize: "200%" }}>{title}</p>
+                  {showSelect && <Select placeholder={placeholder} />}
                 </div>
               </Box>
               <Box>
