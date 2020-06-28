@@ -24,9 +24,20 @@ import imgHospital from "../../Images/Hospital.svg";
 import imgLaboratoy from "../../Images/Laboratory.svg";
 import { Link } from "react-router-dom";
 import Select from "react-select";
+import { Route } from "react-router-dom";
+import DoctorChart from "../Charts/doctorsChart";
+import HospitalChart from "../Charts/hospitalChart";
+import PatientChart from "../Charts/patientChart";
 
 const drawerWidth = 200;
-
+let date = new Date();
+const options = [
+  { value: date.getFullYear() - 1, label: date.getFullYear() - 1 },
+  { value: date.getFullYear() - 2, label: date.getFullYear() - 2 },
+  { value: date.getFullYear() - 3, label: date.getFullYear() - 3 },
+  { value: date.getFullYear() - 4, label: date.getFullYear() - 4 },
+  { value: date.getFullYear() - 5, label: date.getFullYear() - 5 }
+];
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
@@ -124,6 +135,7 @@ export default function MiniDrawer(props) {
   const [title, setTitle] = React.useState("Hospital Data");
   const [showSelect, setShowSelect] = React.useState(false);
   const [placeholder, setPlaceholder] = React.useState("none");
+  const [selectValue, setSelectValue] = React.useState(null);
 
   const handleHospitalTitle = () => {
     setTitle("Hospital Data");
@@ -138,6 +150,10 @@ export default function MiniDrawer(props) {
     setTitle("Patients Data");
     setShowSelect(true);
     setPlaceholder("Select Patient ID");
+  };
+
+  const handleChange = handle => {
+    setSelectValue(handle.value);
   };
 
   return (
@@ -164,7 +180,13 @@ export default function MiniDrawer(props) {
                   flexGrow={1}
                 >
                   <p style={{ margin: "0px", fontSize: "200%" }}>{title}</p>
-                  {showSelect && <Select placeholder={placeholder} />}
+                  {showSelect && (
+                    <Select
+                      placeholder={placeholder}
+                      onChange={handleChange}
+                      options={options}
+                    />
+                  )}
                 </div>
               </Box>
               <Box>
@@ -259,7 +281,14 @@ export default function MiniDrawer(props) {
         className={classes.content}
         style={{ marginTop: "60px", background: "#efffff" }}
       >
-        {props.children}
+        <Route path="/" exact component={HospitalChart} />
+        <Route path="/hospitalChart" exact component={HospitalChart} />
+        <Route path="/doctorChart" exact>
+          <DoctorChart selectedYear={selectValue} />
+        </Route>
+        <Route path="/PatientChart" exact>
+          <PatientChart selectedYear={selectValue} />
+        </Route>
       </main>
     </div>
   );
