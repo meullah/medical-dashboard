@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -7,17 +7,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
-import Box from "@material-ui/core/Box";
+// import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Badge from "@material-ui/core/Badge";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import "./drawer.css";
 import imgDoctor from "../../Images/Doctor.svg";
 import imgHospital from "../../Images/Hospital.svg";
@@ -30,72 +26,71 @@ import HospitalChart from "../Charts/hospitalChart";
 import PatientChart from "../Charts/patientChart";
 
 const drawerWidth = 200;
-let date = new Date();
-const options = [
-  { value: date.getFullYear() - 1, label: date.getFullYear() - 1 },
-  { value: date.getFullYear() - 2, label: date.getFullYear() - 2 },
-  { value: date.getFullYear() - 3, label: date.getFullYear() - 3 },
-  { value: date.getFullYear() - 4, label: date.getFullYear() - 4 },
-  { value: date.getFullYear() - 5, label: date.getFullYear() - 5 }
-];
-const useStyles = makeStyles(theme => ({
+const customStyles = {
+  container: (provided) => ({
+    ...provided,
+    width: "15%",
+  }),
+};
+const options = [];
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
-    marginRight: 36
+    marginRight: 36,
   },
   hide: {
-    display: "none"
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
   },
   drawerOpen: {
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
     width: theme.spacing(7) + 1,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(8) + 4
-    }
+      width: theme.spacing(8) + 4,
+    },
   },
   toolbar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   search: {
     position: "relative",
@@ -103,10 +98,10 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 30,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
-    width: "40%"
+    width: "40%",
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -115,20 +110,20 @@ const useStyles = makeStyles(theme => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputRoot: {
     color: "inherit",
-    width: "100%"
+    width: "100%",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
     transition: theme.transitions.create("width"),
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
-export default function MiniDrawer(props) {
+export default function MiniDrawer({ doctorIDs }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open] = React.useState(false);
@@ -136,6 +131,14 @@ export default function MiniDrawer(props) {
   const [showSelect, setShowSelect] = React.useState(false);
   const [placeholder, setPlaceholder] = React.useState("none");
   const [selectValue, setSelectValue] = React.useState(null);
+
+  useEffect(() => {
+    doctorIDs.forEach((element) => {
+      options.push({ value: element, label: element });
+    });
+
+    console.log(options);
+  }, [doctorIDs]);
 
   const handleHospitalTitle = () => {
     setTitle("Hospital Data");
@@ -152,7 +155,7 @@ export default function MiniDrawer(props) {
     setPlaceholder("Select Patient ID");
   };
 
-  const handleChange = handle => {
+  const handleChange = (handle) => {
     setSelectValue(handle.value);
   };
 
@@ -163,50 +166,37 @@ export default function MiniDrawer(props) {
         color=""
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: open,
         })}
       >
         <Toolbar>
           <div style={{ width: "100%" }}>
-            <Box display="flex">
-              <Box flexGrow={1}>
-                <div
-                  // className={classes.search}
-                  style={{
-                    marginTop: "1vh",
-                    display: "flex",
-                    justifyContent: "space-between"
-                  }}
-                  flexGrow={1}
-                >
-                  <p style={{ margin: "0px", fontSize: "200%" }}>{title}</p>
-                  {showSelect && (
-                    <Select
-                      placeholder={placeholder}
-                      onChange={handleChange}
-                      options={options}
-                    />
-                  )}
-                </div>
-              </Box>
-              <Box>
-                <div>
-                  <IconButton color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                      <MailIcon />
-                    </Badge>
-                  </IconButton>
-                  <IconButton color="inherit">
-                    <Badge badgeContent={17} color="secondary">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
-                  <IconButton color="inherit">
-                    <AccountCircle />
-                  </IconButton>
-                </div>
-              </Box>
-            </Box>
+            <div
+              style={{
+                marginTop: "1vh",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <p style={{ margin: "0px", fontSize: "200%" }}>{title}</p>
+
+              {showSelect && (
+                <Select
+                  styles={customStyles}
+                  placeholder="Select Year"
+                  onChange={handleChange}
+                  options={options}
+                />
+              )}
+              {showSelect && (
+                <Select
+                  styles={customStyles}
+                  placeholder={placeholder}
+                  onChange={handleChange}
+                  options={options}
+                />
+              )}
+            </div>
           </div>
         </Toolbar>
       </AppBar>
@@ -214,13 +204,13 @@ export default function MiniDrawer(props) {
         variant="permanent"
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
+          [classes.drawerClose]: !open,
         })}
         classes={{
           paper: clsx({
             [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
-          })
+            [classes.drawerClose]: !open,
+          }),
         }}
         open={open}
       >

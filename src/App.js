@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import React from "react"
 import { BrowserRouter as Router } from "react-router-dom";
 // import Navbar from "./Components/Navbar/Navbar";
@@ -10,19 +10,27 @@ import Drawer from "./Components/Drawer/Drawer";
 // import PharmacyChart from "./Components/Charts/pharmacyChart";
 import axios from "axios";
 function App() {
-  // const [data, setData] = useState(0);
+  const [doctorIDs, setDoctorIDs] = useState([]);
+  const [patientIDs, setPatientIDs] = useState([]);
+  const [date, setDate] = useState([]);
+
   useEffect(() => {
     async function getData() {
-      const res = await axios.get("http://localhost:5000/hospitalData");
-      // setData(res.data);
-      console.log(res.data.ageChartData);
-    }
+      const res_patient_ids = await axios.get(
+        "http://localhost:5000/patients_ids"
+      );
+      const res_doc_ids = await axios.get("http://localhost:5000/doctors_ids");
 
+      const res_yearDates = await axios.get("http://localhost:5000/dateyears");
+      setDoctorIDs(res_doc_ids.data);
+      setPatientIDs(res_patient_ids.data);
+      setDate(res_yearDates.data);
+    }
     getData();
   }, []);
   return (
     <Router>
-      <Drawer />
+      <Drawer patientIDs={patientIDs} doctorIDs={doctorIDs} yearDates={date} />
     </Router>
 
     // <Router>
