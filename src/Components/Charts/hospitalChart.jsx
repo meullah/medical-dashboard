@@ -16,7 +16,7 @@ const options = [
   { value: date.getFullYear() - 2, label: date.getFullYear() - 2 },
   { value: date.getFullYear() - 3, label: date.getFullYear() - 3 },
   { value: date.getFullYear() - 4, label: date.getFullYear() - 4 },
-  { value: date.getFullYear() - 5, label: date.getFullYear() - 5 }
+  { value: date.getFullYear() - 5, label: date.getFullYear() - 5 },
 ];
 
 export default class hospitalChart extends Component {
@@ -39,7 +39,7 @@ export default class hospitalChart extends Component {
           "SEP",
           "OCT",
           "NOV",
-          "DEC"
+          "DEC",
         ],
         datasets: [
           {
@@ -53,9 +53,40 @@ export default class hospitalChart extends Component {
             pointBorderWidth: 20,
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
-            pointRadius: 4
-          }
-        ]
+            pointRadius: 4,
+          },
+        ],
+      },
+      YearlyTransation_PREDICTION: {
+        labels: [
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC",
+        ],
+        datasets: [
+          {
+            label: "Total Expenses",
+            data: [],
+            borderColor: "#1f8ef1",
+            borderWidth: 2,
+            pointBackgroundColor: "#1f8ef1",
+            pointBorderColor: "rgba(255,255,255,0)",
+            pointHoverBackgroundColor: "#1f8ef1",
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+          },
+        ],
       },
       GenderChart: {
         labels: ["Male", "Female", "Others"],
@@ -64,9 +95,9 @@ export default class hospitalChart extends Component {
             label: "Total Patients",
             data: [2300, 3000, 500],
             backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"],
-            pointStyle: "line"
-          }
-        ]
+            pointStyle: "line",
+          },
+        ],
       },
       AgeGroupChart: {
         labels: ["0-18", "18-40", "40+"],
@@ -74,9 +105,9 @@ export default class hospitalChart extends Component {
           {
             label: "Total Patients",
             data: [2300, 3000, 500],
-            backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"]
-          }
-        ]
+            backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"],
+          },
+        ],
       },
       departmentalExpensesChart: {
         labels: [
@@ -107,7 +138,7 @@ export default class hospitalChart extends Component {
           "Otolaryngology",
           "Physiotherapy",
           "Radiology",
-          "Radiotherapy"
+          "Radiotherapy",
         ],
         datasets: [
           {
@@ -140,28 +171,30 @@ export default class hospitalChart extends Component {
               1085,
               507,
               2663,
-              1485
+              1485,
             ],
             borderColor: "#d048b6",
-            borderWidth: 2
-          }
-        ]
+            borderWidth: 2,
+          },
+        ],
       },
       patientPrediction: {},
       recomendedServices: {
-        services: ["X-Ray", "Blood CP", "MRI"]
-      }
+        services: ["X-Ray", "Blood CP", "MRI"],
+      },
     };
     this.openMoal = this.openMoal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
   openMoal() {
     this.setState({ open: true });
+    this.getPredictionData();
   }
   closeModal() {
     this.setState({ open: false });
   }
-  getYearlyTransactionChartData = canvas => {
+
+  getYearlyTransactionChartData = (canvas) => {
     const data = this.state.YearlyTransation;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
@@ -170,13 +203,13 @@ export default class hospitalChart extends Component {
       gradient.addColorStop(1, "rgba(29,140,248,0.2)");
       gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
       gradient.addColorStop(0, "rgba(29,140,248,0)");
-      data.datasets.forEach(set => {
+      data.datasets.forEach((set) => {
         set.backgroundColor = gradient;
       });
     }
     return data;
   };
-  getDepartmentalChartData = canvas => {
+  getDepartmentalChartData = (canvas) => {
     const data = this.state.departmentalExpensesChart;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
@@ -186,20 +219,39 @@ export default class hospitalChart extends Component {
       gradient.addColorStop(0, "rgba(119,52,169,0)");
 
       data.datasets.backgroundColor = gradient;
-      data.datasets.forEach(set => {
+      data.datasets.forEach((set) => {
         set.backgroundColor = gradient;
       });
     }
     return data;
   };
-  get_Gender_Chart_Data = handle => {
+  getPredictionData = () => {
+    console.log("here");
+
+    fetch(`http://localhost:5000/hospitalYearlyPrediction/12`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // console.log(data.pridicted_values);
+        var previousStates = this.state.YearlyTransation_PREDICTION.datasets[0];
+        previousStates.data = data.pridicted_values;
+        // console.log(previousStates.data);
+        this.setState({ previousStates });
+        // console.log("new states", this.state.GenderChart.datasets[0].data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  get_Gender_Chart_Data = (handle) => {
     // this.setState({ genderYear: handle.value });
     // console.log("Handle Value", handle.value);
     fetch(`http://localhost:5000/genderData/year/${handle.value}`)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // console.log(data.genderCounts);
         var previousStates = this.state.GenderChart.datasets[0];
         previousStates.data = data.genderCounts;
@@ -207,18 +259,18 @@ export default class hospitalChart extends Component {
         this.setState({ previousStates });
         // console.log("new states", this.state.GenderChart.datasets[0].data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  get_Age_Group_Data = handle => {
+  get_Age_Group_Data = (handle) => {
     // console.log("Handle Value", handle.value);
     fetch(`http://localhost:5000/ageGroupData/year/${handle.value}`)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // console.log(data.ageData);
         var previousStates = this.state.AgeGroupChart.datasets[0];
         previousStates.data = data.ageData;
@@ -226,18 +278,18 @@ export default class hospitalChart extends Component {
         this.setState({ previousStates });
         // console.log("new states", this.state.GenderChart.datasets[0].data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  getDepartmentsData = handle => {
+  getDepartmentsData = (handle) => {
     console.log("Handle Value", handle.value);
     fetch(`http://localhost:5000/departmentalExpensesData/year/${handle.value}`)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // console.log(data.dept_exp_data);
         var previousStates = this.state.departmentalExpensesChart.datasets[0];
         previousStates.data = data.dept_exp_data.expenses; // data
@@ -248,17 +300,17 @@ export default class hospitalChart extends Component {
         this.setState({ another_previousState });
         // console.log("new states", this.state.GenderChart.datasets[0].data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
-  get_yearly_transation_data = handle => {
+  get_yearly_transation_data = (handle) => {
     // console.log("Handle Value", handle.value);
     fetch(`http://localhost:5000/yearlyTransactionData/year/${handle.value}`)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // console.log(data.yearlyTransaction);
         var previousStates = this.state.YearlyTransation.datasets[0]; // Y capital
         previousStates.data = data.yearlyTransaction; // data
@@ -266,7 +318,7 @@ export default class hospitalChart extends Component {
         // console.log(previousStates.data);
         // console.log("new states", this.state.GenderChart.datasets[0].data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -279,7 +331,7 @@ export default class hospitalChart extends Component {
       marginTop: "3px",
       marginBottom: "3px",
       paddingTop: "10px",
-      alignItems: "center"
+      alignItems: "center",
     };
     return (
       <div>
@@ -326,7 +378,7 @@ export default class hospitalChart extends Component {
                 574,
                 569,
                 782,
-                740
+                740,
               ]}
               borderColor="#00d6b4"
               backgroundColor="rgba(66,134,121,0.15)"
@@ -350,7 +402,7 @@ export default class hospitalChart extends Component {
                     style={{
                       float: "right",
                       marginRight: "12px",
-                      marginBottom: "5px"
+                      marginBottom: "5px",
                     }}
                   >
                     Prediction
@@ -363,7 +415,7 @@ export default class hospitalChart extends Component {
                   height="220px"
                   options={{
                     legend: {
-                      display: false
+                      display: false,
                     },
                     tooltips: {
                       backgroundColor: "#f5f5f5",
@@ -373,7 +425,7 @@ export default class hospitalChart extends Component {
                       xPadding: 12,
                       mode: "nearest",
                       intersect: 0,
-                      position: "nearest"
+                      position: "nearest",
                     },
                     responsive: true,
                     maintainAspectRatio: false,
@@ -384,15 +436,15 @@ export default class hospitalChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(29,140,248,0.0)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             suggestedMin: 60,
                             suggestedMax: 125,
                             padding: 20,
-                            fontColor: "#9a9a9a"
-                          }
-                        }
+                            fontColor: "#9a9a9a",
+                          },
+                        },
                       ],
                       xAxes: [
                         {
@@ -400,15 +452,15 @@ export default class hospitalChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(29,140,248,0.1)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             padding: 20,
-                            fontColor: "#9a9a9a"
-                          }
-                        }
-                      ]
-                    }
+                            fontColor: "#9a9a9a",
+                          },
+                        },
+                      ],
+                    },
                   }}
                   data={this.getYearlyTransactionChartData}
                 />
@@ -442,7 +494,7 @@ export default class hospitalChart extends Component {
                   height="250px"
                   options={{
                     legend: {
-                      display: false
+                      display: false,
                     },
                     responsive: true,
                     maintainAspectRatio: false,
@@ -454,7 +506,7 @@ export default class hospitalChart extends Component {
                       xPadding: 12,
                       mode: "nearest",
                       intersect: 0,
-                      position: "nearest"
+                      position: "nearest",
                     },
 
                     scales: {
@@ -463,30 +515,30 @@ export default class hospitalChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(225,78,202,0.1)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             suggestedMin: 60,
                             suggestedMax: 120,
                             padding: 20,
-                            fontColor: "#9e9e9e"
-                          }
-                        }
+                            fontColor: "#9e9e9e",
+                          },
+                        },
                       ],
                       xAxes: [
                         {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(225,78,202,0.1)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             padding: 20,
-                            fontColor: "#9e9e9e"
-                          }
-                        }
-                      ]
-                    }
+                            fontColor: "#9e9e9e",
+                          },
+                        },
+                      ],
+                    },
                   }}
                   data={this.getDepartmentalChartData}
                 />
@@ -514,9 +566,9 @@ export default class hospitalChart extends Component {
                       position: "right",
                       align: "middle",
                       labels: {
-                        usePointStyle: true
-                      }
-                    }
+                        usePointStyle: true,
+                      },
+                    },
                   }}
                 />
               </CardContent>
@@ -542,9 +594,9 @@ export default class hospitalChart extends Component {
                       position: "right",
                       align: "middle",
                       labels: {
-                        usePointStyle: true
-                      }
-                    }
+                        usePointStyle: true,
+                      },
+                    },
                   }}
                 />
               </CardContent>
@@ -573,7 +625,7 @@ export default class hospitalChart extends Component {
           <Card>
             <div style={myStyles}>
               <Typography variant="h6">Prediction</Typography>
-              <ButtonGroup
+              {/* <ButtonGroup
                 variant="text"
                 color="primary"
                 n
@@ -582,14 +634,14 @@ export default class hospitalChart extends Component {
                 <Button selected>1 Month</Button>
                 <Button>6 Month</Button>
                 <Button>1 Year</Button>
-              </ButtonGroup>
+              </ButtonGroup> */}
             </div>
             <CardContent>
               <Line
                 height="220px"
                 options={{
                   legend: {
-                    display: false
+                    display: false,
                   },
                   tooltips: {
                     bodySpacing: 4,
@@ -598,7 +650,7 @@ export default class hospitalChart extends Component {
                     position: "nearest",
                     xPadding: 10,
                     yPadding: 10,
-                    caretPadding: 10
+                    caretPadding: 10,
                   },
                   responsive: true,
                   maintainAspectRatio: false,
@@ -607,28 +659,28 @@ export default class hospitalChart extends Component {
                       {
                         ticks: {
                           // max: 130,
-                          beginAtZero: true
+                          beginAtZero: true,
                           // stepSize: 10
                         },
                         gridLines: {
-                          display: false
+                          display: false,
                         },
                         scaleLabel: {
                           display: true,
-                          labelString: "Total Expenses"
-                        }
-                      }
+                          labelString: "Total Expenses",
+                        },
+                      },
                     ],
                     xAxes: [
                       {
                         gridLines: {
-                          display: false
-                        }
-                      }
-                    ]
-                  }
+                          display: false,
+                        },
+                      },
+                    ],
+                  },
                 }}
-                data={this.getChartData}
+                data={this.state.YearlyTransation_PREDICTION}
               />
             </CardContent>
           </Card>

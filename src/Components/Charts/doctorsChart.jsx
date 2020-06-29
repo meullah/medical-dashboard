@@ -13,7 +13,6 @@ import TableHead from "@material-ui/core/TableHead";
 import Paper from "@material-ui/core/Paper";
 import TableRow from "@material-ui/core/TableRow";
 import Popup from "reactjs-popup";
-import Select from "react-select";
 import "./popUp.css";
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -295,8 +294,7 @@ export default class doctorsChart extends Component {
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Patients/Month</Typography>
-                <div className="chart_menubar_1">
-                  <Select />
+                <div>
                   <Button
                     onClick={this.openMoal}
                     variant="contained"

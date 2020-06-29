@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { Line, Doughnut, Bar, Bubble } from "react-chartjs-2";
-import { Grid, Typography, ButtonGroup } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,26 +11,23 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Popup from "reactjs-popup";
-import "./popUp.css";
-import Select from "../Select/select";
 
-const StyledTableCell = withStyles(theme => ({
+const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
   body: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 }))(TableCell);
 
-const StyledTableRow = withStyles(theme => ({
+const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.background.default
-    }
-  }
+      backgroundColor: theme.palette.background.default,
+    },
+  },
 }))(TableRow);
 
 function createData(name, calories, fat, carbs, protein) {
@@ -43,13 +39,13 @@ const rows = [
   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
   createData("Eclair", 262, 16.0, 24, 6.0),
   createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
 const classes = makeStyles({
   table: {
-    minWidth: 700
-  }
+    minWidth: 700,
+  },
 });
 
 export default class patientChart extends Component {
@@ -57,8 +53,6 @@ export default class patientChart extends Component {
     super(props);
 
     this.state = {
-      open: false,
-      openMorePopUp: false,
       data: {
         labels: [
           "JAN",
@@ -72,7 +66,7 @@ export default class patientChart extends Component {
           "SEP",
           "OCT",
           "NOV",
-          "DEC"
+          "DEC",
         ],
         datasets: [
           {
@@ -86,9 +80,9 @@ export default class patientChart extends Component {
             pointBorderWidth: 20,
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
-            pointRadius: 4
-          }
-        ]
+            pointRadius: 4,
+          },
+        ],
       },
       GenderChart: {
         labels: ["Self", "Relatives"],
@@ -97,9 +91,9 @@ export default class patientChart extends Component {
             label: "Total Spendings",
             data: [2300, 3000],
             backgroundColor: ["#1f8ef1", "#d048b6"],
-            pointStyle: "cross"
-          }
-        ]
+            pointStyle: "cross",
+          },
+        ],
       },
       bubbleChart: {
         labels: ["Scatter"],
@@ -116,7 +110,7 @@ export default class patientChart extends Component {
           "SEP",
           "OCT",
           "NOV",
-          "DEC"
+          "DEC",
         ],
 
         datasets: [
@@ -140,10 +134,10 @@ export default class patientChart extends Component {
               { x: 3, y: 29, r: 30 },
               { x: 4, y: 36, r: 10 },
               { x: 5, y: 25, r: 50 },
-              { x: 6, y: 18, r: 16 }
-            ]
-          }
-        ]
+              { x: 6, y: 18, r: 16 },
+            ],
+          },
+        ],
       },
       departmentalExpensesChart: {
         labels: [
@@ -158,7 +152,7 @@ export default class patientChart extends Component {
           "SEP",
           "OCT",
           "NOV",
-          "DEC"
+          "DEC",
         ],
         datasets: [
           {
@@ -191,36 +185,19 @@ export default class patientChart extends Component {
               1085,
               507,
               2663,
-              1485
+              1485,
             ],
             borderColor: "#d048b6",
-            borderWidth: 2
-          }
-        ]
+            borderWidth: 2,
+          },
+        ],
       },
-      patientPrediction: {},
       recomendedServices: {
-        services: ["X-Ray", "Blood CP", "MRI"]
-      }
+        services: ["X-Ray", "Blood CP", "MRI"],
+      },
     };
-    this.openMoal = this.openMoal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.openPopUp_more = this.openPopUp_more.bind(this);
-    this.closePopUp_more = this.closePopUp_more.bind(this);
   }
-  openMoal() {
-    this.setState({ open: true });
-  }
-  closeModal() {
-    this.setState({ open: false });
-  }
-  openPopUp_more() {
-    this.setState({ openMorePopUp: true });
-  }
-  closePopUp_more() {
-    this.setState({ openMorePopUp: false });
-  }
-  getChartData = canvas => {
+  getChartData = (canvas) => {
     const data = this.state.data;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
@@ -229,13 +206,13 @@ export default class patientChart extends Component {
       gradient.addColorStop(1, "rgba(29,140,248,0.2)");
       gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
       gradient.addColorStop(0, "rgba(29,140,248,0)");
-      data.datasets.forEach(set => {
+      data.datasets.forEach((set) => {
         set.backgroundColor = gradient;
       });
     }
     return data;
   };
-  getBubbleChartData = canvas => {
+  getBubbleChartData = (canvas) => {
     const data = this.state.bubbleChart;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
@@ -244,13 +221,13 @@ export default class patientChart extends Component {
       gradient.addColorStop(1, "rgba(29,140,248,0.2)");
       gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
       gradient.addColorStop(0, "rgba(29,140,248,0)");
-      data.datasets.forEach(set => {
+      data.datasets.forEach((set) => {
         set.backgroundColor = gradient;
       });
     }
     return data;
   };
-  getDepartmentalChartData = canvas => {
+  getDepartmentalChartData = (canvas) => {
     const data = this.state.departmentalExpensesChart;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
@@ -260,7 +237,7 @@ export default class patientChart extends Component {
       gradient.addColorStop(0, "rgba(119,52,169,0)");
 
       data.datasets.backgroundColor = gradient;
-      data.datasets.forEach(set => {
+      data.datasets.forEach((set) => {
         set.backgroundColor = gradient;
       });
     }
@@ -276,7 +253,7 @@ export default class patientChart extends Component {
       marginTop: "3px",
       marginBottom: "3px",
       paddingTop: "10px",
-      alignItems: "center"
+      alignItems: "center",
     };
     return (
       <div>
@@ -285,18 +262,6 @@ export default class patientChart extends Component {
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Yearly Amount</Typography>
-                <Button
-                  onClick={this.openMoal}
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    float: "right",
-                    marginRight: "12px",
-                    marginBottom: "5px"
-                  }}
-                >
-                  Prediction
-                </Button>
               </div>
               <CardContent>
                 <Line
@@ -304,7 +269,7 @@ export default class patientChart extends Component {
                   height="220px"
                   options={{
                     legend: {
-                      display: false
+                      display: false,
                     },
                     tooltips: {
                       backgroundColor: "#f5f5f5",
@@ -314,7 +279,7 @@ export default class patientChart extends Component {
                       xPadding: 12,
                       mode: "nearest",
                       intersect: 0,
-                      position: "nearest"
+                      position: "nearest",
                     },
                     responsive: true,
                     maintainAspectRatio: false,
@@ -325,15 +290,15 @@ export default class patientChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(29,140,248,0.0)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             suggestedMin: 60,
                             suggestedMax: 125,
                             padding: 20,
-                            fontColor: "#9a9a9a"
-                          }
-                        }
+                            fontColor: "#9a9a9a",
+                          },
+                        },
                       ],
                       xAxes: [
                         {
@@ -341,15 +306,15 @@ export default class patientChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(29,140,248,0.1)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             padding: 20,
-                            fontColor: "#9a9a9a"
-                          }
-                        }
-                      ]
-                    }
+                            fontColor: "#9a9a9a",
+                          },
+                        },
+                      ],
+                    },
                   }}
                   data={this.getChartData}
                 />
@@ -366,7 +331,7 @@ export default class patientChart extends Component {
                   height="250px"
                   options={{
                     legend: {
-                      display: false
+                      display: false,
                     },
                     responsive: true,
                     maintainAspectRatio: false,
@@ -378,7 +343,7 @@ export default class patientChart extends Component {
                       xPadding: 12,
                       mode: "nearest",
                       intersect: 0,
-                      position: "nearest"
+                      position: "nearest",
                     },
 
                     scales: {
@@ -387,30 +352,30 @@ export default class patientChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(225,78,202,0.1)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             suggestedMin: 60,
                             suggestedMax: 120,
                             padding: 20,
-                            fontColor: "#9e9e9e"
-                          }
-                        }
+                            fontColor: "#9e9e9e",
+                          },
+                        },
                       ],
                       xAxes: [
                         {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(225,78,202,0.1)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             padding: 20,
-                            fontColor: "#9e9e9e"
-                          }
-                        }
-                      ]
-                    }
+                            fontColor: "#9e9e9e",
+                          },
+                        },
+                      ],
+                    },
                   }}
                   data={this.getDepartmentalChartData}
                 />
@@ -421,7 +386,6 @@ export default class patientChart extends Component {
             <Card style={{ height: "320px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Spendings</Typography>
-                <Select />
               </div>
               <CardContent>
                 <Doughnut
@@ -433,9 +397,9 @@ export default class patientChart extends Component {
                       position: "right",
                       align: "middle",
                       labels: {
-                        usePointStyle: true
-                      }
-                    }
+                        usePointStyle: true,
+                      },
+                    },
                   }}
                 />
               </CardContent>
@@ -461,15 +425,15 @@ export default class patientChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(29,140,248,0.0)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             suggestedMin: 60,
                             suggestedMax: 125,
                             padding: 20,
-                            fontColor: "#9a9a9a"
-                          }
-                        }
+                            fontColor: "#9a9a9a",
+                          },
+                        },
                       ],
                       xAxes: [
                         {
@@ -478,15 +442,15 @@ export default class patientChart extends Component {
                           gridLines: {
                             drawBorder: false,
                             color: "rgba(29,140,248,0.1)",
-                            zeroLineColor: "transparent"
+                            zeroLineColor: "transparent",
                           },
                           ticks: {
                             padding: 20,
-                            fontColor: "#9a9a9a"
-                          }
-                        }
-                      ]
-                    }
+                            fontColor: "#9a9a9a",
+                          },
+                        },
+                      ],
+                    },
                   }}
                   data={this.getBubbleChartData}
                 />
@@ -506,7 +470,7 @@ export default class patientChart extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map(row => (
+                  {rows.map((row) => (
                     <StyledTableRow key={row.name}>
                       <StyledTableCell component="th" scope="row">
                         {row.name}
@@ -528,77 +492,6 @@ export default class patientChart extends Component {
             </TableContainer>
           </Grid>
         </Grid>
-
-        {/* POP UP Component */}
-
-        <Popup
-          open={this.state.open}
-          closeOnDocumentClick
-          onClose={this.closeModal}
-          modal
-        >
-          <Card>
-            <div style={myStyles}>
-              <Typography variant="h6">Prediction</Typography>
-              <ButtonGroup
-                variant="text"
-                color="primary"
-                aria-label="text primary button group"
-              >
-                <Button selected>1 Month</Button>
-                <Button>6 Month</Button>
-                <Button>1 Year</Button>
-              </ButtonGroup>
-            </div>
-            <CardContent>
-              <Line
-                height="220px"
-                options={{
-                  legend: {
-                    display: false
-                  },
-                  tooltips: {
-                    bodySpacing: 4,
-                    mode: "nearest",
-                    intersect: 0,
-                    position: "nearest",
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                  },
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    yAxes: [
-                      {
-                        ticks: {
-                          // max: 130,
-                          beginAtZero: true
-                          // stepSize: 10
-                        },
-                        gridLines: {
-                          display: false
-                        },
-                        scaleLabel: {
-                          display: true,
-                          labelString: "Total Expenses"
-                        }
-                      }
-                    ],
-                    xAxes: [
-                      {
-                        gridLines: {
-                          display: false
-                        }
-                      }
-                    ]
-                  }
-                }}
-                data={this.getChartData}
-              />
-            </CardContent>
-          </Card>
-        </Popup>
       </div>
     );
   }

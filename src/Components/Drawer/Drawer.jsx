@@ -32,7 +32,8 @@ const customStyles = {
     width: "15%",
   }),
 };
-const options = [];
+let options = [];
+let years = [];
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -123,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniDrawer({ doctorIDs }) {
+export default function MiniDrawer({ doctorIDs, yearDates }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open] = React.useState(false);
@@ -133,12 +134,18 @@ export default function MiniDrawer({ doctorIDs }) {
   const [selectValue, setSelectValue] = React.useState(null);
 
   useEffect(() => {
+    options = [];
+    years = [];
     doctorIDs.forEach((element) => {
       options.push({ value: element, label: element });
     });
 
+    yearDates.forEach((element) => {
+      years.push({ value: element, label: element });
+    });
+
     console.log(options);
-  }, [doctorIDs]);
+  }, [doctorIDs, yearDates]);
 
   const handleHospitalTitle = () => {
     setTitle("Hospital Data");
@@ -185,7 +192,7 @@ export default function MiniDrawer({ doctorIDs }) {
                   styles={customStyles}
                   placeholder="Select Year"
                   onChange={handleChange}
-                  options={options}
+                  options={years}
                 />
               )}
               {showSelect && (
