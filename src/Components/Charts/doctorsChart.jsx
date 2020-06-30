@@ -169,10 +169,6 @@ export default class doctorsChart extends Component {
           },
         ],
       },
-      patientPrediction: {},
-      recomendedServices: {
-        services: ["X-Ray", "Blood CP", "MRI"],
-      },
     };
   }
 
@@ -277,6 +273,38 @@ export default class doctorsChart extends Component {
 
           // console.log("previous states", previousStates.data);
           // console.log("new states", this.state.GenderChart.datasets[0].data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      //  get bubble chart data
+
+      fetch(
+        `http://localhost:5000/doctorbubblechart/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("bubble chart data", data);
+          var previousStates = this.state.bubbleChart.datasets[0];
+          let newDict = [];
+          let ageGroup = data.age_group;
+          let freq = data.frequency;
+          let service = data.service;
+          console.log(ageGroup, freq, service, ageGroup.length);
+
+          var i;
+          for (i = 0; i < ageGroup.length; i++) {
+            let temp = { x: ageGroup[i], y: service[i], z: freq[i] };
+            newDict.push(temp);
+          }
+          previousStates.data = newDict;
+          this.setState({ previousStates });
+
+          console.log("previous states", previousStates.data);
+          console.log("new states", this.state.bubbleChart.datasets[0].data);
         })
         .catch((error) => {
           console.log(error);
@@ -574,7 +602,7 @@ export default class doctorsChart extends Component {
                       ],
                     },
                   }}
-                  data={this.getBubbleChartData}
+                  data={this.state.bubbleChart}
                 />
               </CardContent>
             </Card>
