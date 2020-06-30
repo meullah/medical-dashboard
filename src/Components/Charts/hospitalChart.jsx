@@ -209,6 +209,21 @@ export default class hospitalChart extends Component {
     }
     return data;
   };
+  get_YearlyTransation_PREDICTION = (canvas) => {
+    const data = this.state.YearlyTransation_PREDICTION;
+    if (data.datasets) {
+      const ctx = canvas.getContext("2d");
+      var gradient = ctx.createLinearGradient(0, 230, 0, 50);
+
+      gradient.addColorStop(1, "rgba(29,140,248,0.2)");
+      gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
+      gradient.addColorStop(0, "rgba(29,140,248,0)");
+      data.datasets.forEach((set) => {
+        set.backgroundColor = gradient;
+      });
+    }
+    return data;
+  };
   getDepartmentalChartData = (canvas) => {
     const data = this.state.departmentalExpensesChart;
     if (data.datasets) {
@@ -680,7 +695,7 @@ export default class hospitalChart extends Component {
                     ],
                   },
                 }}
-                data={this.state.YearlyTransation_PREDICTION}
+                data={this.get_YearlyTransation_PREDICTION}
               />
             </CardContent>
           </Card>
