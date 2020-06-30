@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import { Line, Bar, Bubble, Doughnut } from "react-chartjs-2";
-import { Grid, Typography, ButtonGroup } from "@material-ui/core";
+import { Bar, Bubble, Doughnut } from "react-chartjs-2";
+import { Grid, Typography } from "@material-ui/core";
 // import Table from "@material-ui/core/Table";
 import Card from "@material-ui/core/Card";
 // import { makeStyles, withStyles } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 // import TableCell from "@material-ui/core/TableCell";
 // import TableBody from "@material-ui/core/TableBody";
 // import TableContainer from "@material-ui/core/TableContainer";
 // import TableHead from "@material-ui/core/TableHead";
 // import Paper from "@material-ui/core/Paper";
 // import TableRow from "@material-ui/core/TableRow";
-import Popup from "reactjs-popup";
+// import Popup from "reactjs-popup";
 import "./popUp.css";
 // import axios from "axios";
 // const StyledTableCell = withStyles((theme) => ({
@@ -56,8 +56,6 @@ export default class doctorsChart extends Component {
     super(props);
     console.log(props);
     this.state = {
-      open: false,
-      openMorePopUp: false,
       data: {
         labels: [
           "JAN",
@@ -176,10 +174,6 @@ export default class doctorsChart extends Component {
         services: ["X-Ray", "Blood CP", "MRI"],
       },
     };
-    this.openMoal = this.openMoal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.openPopUp_more = this.openPopUp_more.bind(this);
-    this.closePopUp_more = this.closePopUp_more.bind(this);
   }
 
   componentDidMount() {
@@ -312,18 +306,6 @@ export default class doctorsChart extends Component {
     // }
   }
 
-  openMoal() {
-    this.setState({ open: true });
-  }
-  closeModal() {
-    this.setState({ open: false });
-  }
-  openPopUp_more() {
-    this.setState({ openMorePopUp: true });
-  }
-  closePopUp_more() {
-    this.setState({ openMorePopUp: false });
-  }
   getChartData = (canvas) => {
     const data = this.state.data;
     if (data.datasets) {
@@ -393,7 +375,7 @@ export default class doctorsChart extends Component {
             <Card style={{ height: "300px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Patients/Month</Typography>
-                <div>
+                {/* <div>
                   <Button
                     onClick={this.openMoal}
                     variant="contained"
@@ -406,7 +388,7 @@ export default class doctorsChart extends Component {
                   >
                     Prediction
                   </Button>
-                </div>
+                </div> */}
               </div>
               <CardContent>
                 <Bar
@@ -630,77 +612,6 @@ export default class doctorsChart extends Component {
             </TableContainer>
           </Grid> */}
         </Grid>
-
-        {/* POP UP Component */}
-
-        <Popup
-          open={this.state.open}
-          closeOnDocumentClick
-          onClose={this.closeModal}
-          modal
-        >
-          <Card>
-            <div style={myStyles}>
-              <Typography variant="h6">Prediction</Typography>
-              <ButtonGroup
-                variant="text"
-                color="primary"
-                aria-label="text primary button group"
-              >
-                <Button selected>1 Month</Button>
-                <Button>6 Month</Button>
-                <Button>1 Year</Button>
-              </ButtonGroup>
-            </div>
-            <CardContent>
-              <Line
-                height="220px"
-                options={{
-                  legend: {
-                    display: false,
-                  },
-                  tooltips: {
-                    bodySpacing: 4,
-                    mode: "nearest",
-                    intersect: 0,
-                    position: "nearest",
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10,
-                  },
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    yAxes: [
-                      {
-                        ticks: {
-                          // max: 130,
-                          beginAtZero: true,
-                          // stepSize: 10
-                        },
-                        gridLines: {
-                          display: false,
-                        },
-                        scaleLabel: {
-                          display: true,
-                          labelString: "Total Expenses",
-                        },
-                      },
-                    ],
-                    xAxes: [
-                      {
-                        gridLines: {
-                          display: false,
-                        },
-                      },
-                    ],
-                  },
-                }}
-                data={this.getChartData}
-              />
-            </CardContent>
-          </Card>
-        </Popup>
       </div>
     );
   }
