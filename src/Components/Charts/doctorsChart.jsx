@@ -1,59 +1,60 @@
 import React, { Component } from "react";
-import { Line, Bar, Bubble } from "react-chartjs-2";
+import { Line, Bar, Bubble, Doughnut } from "react-chartjs-2";
 import { Grid, Typography, ButtonGroup } from "@material-ui/core";
-import Table from "@material-ui/core/Table";
+// import Table from "@material-ui/core/Table";
 import Card from "@material-ui/core/Card";
-import { makeStyles, withStyles } from "@material-ui/core";
+// import { makeStyles, withStyles } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import TableCell from "@material-ui/core/TableCell";
-import TableBody from "@material-ui/core/TableBody";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import Paper from "@material-ui/core/Paper";
-import TableRow from "@material-ui/core/TableRow";
+// import TableCell from "@material-ui/core/TableCell";
+// import TableBody from "@material-ui/core/TableBody";
+// import TableContainer from "@material-ui/core/TableContainer";
+// import TableHead from "@material-ui/core/TableHead";
+// import Paper from "@material-ui/core/Paper";
+// import TableRow from "@material-ui/core/TableRow";
 import Popup from "reactjs-popup";
 import "./popUp.css";
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+// import axios from "axios";
+// const StyledTableCell = withStyles((theme) => ({
+//   head: {
+//     backgroundColor: theme.palette.common.black,
+//     color: theme.palette.common.white,
+//   },
+//   body: {
+//     fontSize: 14,
+//   },
+// }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.background.default,
-    },
-  },
-}))(TableRow);
+// const StyledTableRow = withStyles((theme) => ({
+//   root: {
+//     "&:nth-of-type(odd)": {
+//       backgroundColor: theme.palette.background.default,
+//     },
+//   },
+// }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+// function createData(name, calories, fat, carbs, protein) {
+//   return { name, calories, fat, carbs, protein };
+// }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+// const rows = [
+//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+//   createData("Eclair", 262, 16.0, 24, 6.0),
+//   createData("Cupcake", 305, 3.7, 67, 4.3),
+//   createData("Gingerbread", 356, 16.0, 49, 3.9),
+// ];
 
-const classes = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
+// const classes = makeStyles({
+//   table: {
+//     minWidth: 700,
+//   },
+// });
 
 export default class doctorsChart extends Component {
   constructor(props) {
     super(props);
-
+    console.log(props);
     this.state = {
       open: false,
       openMorePopUp: false,
@@ -74,8 +75,8 @@ export default class doctorsChart extends Component {
         ],
         datasets: [
           {
-            label: "Total Expenses",
-            data: [100, 110, 76, 105, 50, 100, 90, 95, 100, 75, 110, 120],
+            label: "Number of Patients",
+            data: [props.doc_id, props.selectedYear],
             borderColor: "#1f8ef1",
             borderWidth: 2,
             pointBackgroundColor: "#1f8ef1",
@@ -88,17 +89,7 @@ export default class doctorsChart extends Component {
           },
         ],
       },
-      GenderChart: {
-        labels: ["Self", "Relatives"],
-        datasets: [
-          {
-            label: "Total Spendings",
-            data: [2300, 3000],
-            backgroundColor: ["#1f8ef1", "#d048b6"],
-            pointStyle: "cross",
-          },
-        ],
-      },
+
       bubbleChart: {
         labels: ["Scatter"],
         yLabels: ["Mon", "Tue", "wed", "Thu", "Fri", "SAT", "SUN"],
@@ -194,6 +185,52 @@ export default class doctorsChart extends Component {
             borderColor: "#d048b6",
             borderWidth: 2,
           },
+          {
+            label: "aaaaaaaahhhhhhh",
+            data: [
+              3179,
+              1744,
+              2416,
+              4232,
+              3668,
+              1734,
+              1241,
+              3033,
+              3247,
+              2875,
+              3427,
+              2368,
+              598,
+              2916,
+              974,
+              2187,
+              3281,
+              3328,
+              418,
+              4227,
+              4565,
+              1360,
+              3475,
+              2737,
+              1085,
+              507,
+              2663,
+              1485,
+            ],
+            borderColor: "#000",
+            borderWidth: 2,
+          },
+        ],
+      },
+      patientGender: {
+        labels: ["Female", "Male", "Others"],
+        datasets: [
+          {
+            label: "Total Patients",
+            data: [12, 12],
+            backgroundColor: ["#d048b6", "#1f8ef1", "#00d6b4"],
+            pointStyle: "line",
+          },
         ],
       },
       patientPrediction: {},
@@ -206,17 +243,111 @@ export default class doctorsChart extends Component {
     this.openPopUp_more = this.openPopUp_more.bind(this);
     this.closePopUp_more = this.closePopUp_more.bind(this);
   }
+
+  componentDidMount() {
+    console.log("doctors props", this.props);
+  }
   updateAndNotify = () => {
-    console.log(this.props.selectedYear);
+    let year = this.props.selectedYear;
+    let doctorID = this.props.doc_id;
+    // let perviousStates = this.state.data.datasets[0];
+    console.log("props changed");
+    console.log("year = ", year, "doc id", doctorID);
+
+    // async function getChartsData() {
+    //   const patients_per_month = await axios.get(
+    //     `http://localhost:5000/doctorsPatientEarlyRecord/year/${year}/doc_id/${doctorID}`
+    //   );
+    //   console.log(patients_per_month);
+    //   perviousStates.data = patients_per_month.data;
+    // }
+    // getChartsData();
+    // this.setState({ perviousStates });
   };
 
   // check if props have changed or not
   // componentDidUpdate has previous props as a parameter
   componentDidUpdate(prevProps) {
-    if (prevProps.selectedYear !== this.props.selectedYear) {
-      this.updateAndNotify();
+    if (
+      (prevProps.selectedYear !== this.props.selectedYear &&
+        prevProps.doc_id !== null) ||
+      (prevProps.doc_id !== this.props.doc_id &&
+        prevProps.selectedYear !== null)
+    ) {
+      // Fetch Patients per month
+
+      fetch(
+        `http://localhost:5000/doctorsPatientEarlyRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          // console.log(data);
+          var previousStates = this.state.data.datasets[0]; // Y capital
+          previousStates.data = data; // data
+          this.setState({ previousStates });
+          // console.log("previous states", previousStates.data);
+          // console.log("new states", this.state.GenderChart.datasets[0].data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // Fetch Patients Gender info
+      fetch(
+        `http://localhost:5000/doctorsPatientGenderRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("gender data", data);
+          let info = [];
+          if ("F" in data) {
+            info.push(data.F);
+            if ("M" in data) {
+              info.push(data.M);
+            }
+          } else if ("M" in data) {
+            info.push(0);
+            info.push(data.M);
+          }
+
+          var previousStates = this.state.patientGender.datasets[0]; // Y capital
+          previousStates.data = info; // data
+          this.setState({ previousStates });
+          // console.log("previous states", previousStates.data);
+          // console.log("new states", this.state.GenderChart.datasets[0].data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
+    // if (
+    //   prevProps.doc_id !== this.props.doc_id &&
+    //   prevProps.selectedYear !== null
+    // ) {
+    //   fetch(
+    //     `http://localhost:5000/doctorsPatientEarlyRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+    //   )
+    //     .then((response) => {
+    //       return response.json();
+    //     })
+    //     .then((data) => {
+    //       // console.log(data);
+    //       var previousStates = this.state.data.datasets[0]; // Y capital
+    //       previousStates.data = data; // data
+    //       this.setState({ previousStates });
+    //       // console.log("previous states", previousStates.data);
+    //       // console.log("new states", this.state.GenderChart.datasets[0].data);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // }
   }
+
   openMoal() {
     this.setState({ open: true });
   }
@@ -289,6 +420,10 @@ export default class doctorsChart extends Component {
     };
     return (
       <div>
+        <div>
+          {this.props.selectedYear}
+          {this.props.doc_id}
+        </div>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Card style={{ height: "300px" }}>
@@ -336,8 +471,8 @@ export default class doctorsChart extends Component {
                             display: false,
                           },
                           ticks: {
-                            suggestedMin: 60,
-                            suggestedMax: 125,
+                            suggestedMin: 0,
+                            suggestedMax: 25,
                             padding: 20,
                             fontColor: "#9a9a9a",
                           },
@@ -361,7 +496,7 @@ export default class doctorsChart extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <Card style={{ height: "320px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Services Frequency</Typography>
@@ -422,64 +557,26 @@ export default class doctorsChart extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Card style={{ height: "320px" }}>
               <div style={myStyles}>
-                <Typography variant="h6">Patients by age / gender</Typography>
+                <Typography variant="h6">Patients record by gender</Typography>
               </div>
 
               <CardContent>
-                <Bar
-                  height="250px"
+                <Doughnut
+                  height="175px"
+                  data={this.state.patientGender}
                   options={{
-                    legend: {
-                      display: false,
-                    },
                     responsive: true,
-                    maintainAspectRatio: false,
-                    tooltips: {
-                      backgroundColor: "#f5f5f5",
-                      titleFontColor: "#333",
-                      bodyFontColor: "#666",
-                      bodySpacing: 4,
-                      xPadding: 12,
-                      mode: "nearest",
-                      intersect: 0,
-                      position: "nearest",
-                    },
-
-                    scales: {
-                      yAxes: [
-                        {
-                          gridLines: {
-                            drawBorder: false,
-                            color: "rgba(225,78,202,0.1)",
-                            zeroLineColor: "transparent",
-                          },
-                          ticks: {
-                            suggestedMin: 60,
-                            suggestedMax: 120,
-                            padding: 20,
-                            fontColor: "#9e9e9e",
-                          },
-                        },
-                      ],
-                      xAxes: [
-                        {
-                          gridLines: {
-                            drawBorder: false,
-                            color: "rgba(225,78,202,0.1)",
-                            zeroLineColor: "transparent",
-                          },
-                          ticks: {
-                            padding: 20,
-                            fontColor: "#9e9e9e",
-                          },
-                        },
-                      ],
+                    legend: {
+                      position: "right",
+                      align: "middle",
+                      labels: {
+                        usePointStyle: true,
+                      },
                     },
                   }}
-                  data={this.getDepartmentalChartData}
                 />
               </CardContent>
             </Card>
@@ -536,7 +633,7 @@ export default class doctorsChart extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
@@ -567,7 +664,7 @@ export default class doctorsChart extends Component {
                 </TableBody>
               </Table>
             </TableContainer>
-          </Grid>
+          </Grid> */}
         </Grid>
 
         {/* POP UP Component */}

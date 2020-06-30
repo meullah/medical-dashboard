@@ -24,6 +24,7 @@ import { Route } from "react-router-dom";
 import DoctorChart from "../Charts/doctorsChart";
 import HospitalChart from "../Charts/hospitalChart";
 import PatientChart from "../Charts/patientChart";
+import doctorsChart from "../Charts/doctorsChart";
 
 const drawerWidth = 200;
 const customStyles = {
@@ -34,6 +35,7 @@ const customStyles = {
 };
 let options = [];
 let years = [];
+let patient_ids = [];
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -124,14 +126,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniDrawer({ doctorIDs, yearDates }) {
+export default function MiniDrawer({ doctorIDs, yearDates, patientIDs }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open] = React.useState(false);
   const [title, setTitle] = React.useState("Hospital Data");
   const [showSelect, setShowSelect] = React.useState(false);
   const [placeholder, setPlaceholder] = React.useState("none");
-  const [selectValue, setSelectValue] = React.useState(null);
+  const [year, setYear] = React.useState(null);
+  const [doc_id, setDoc_id] = React.useState(null);
+  const [patient_id, setPatient_id] = React.useState(null);
+
+  // const [daoctorsChartData, setDaoctorsChartData] = useState(null);
 
   useEffect(() => {
     options = [];
@@ -144,8 +150,12 @@ export default function MiniDrawer({ doctorIDs, yearDates }) {
       years.push({ value: element, label: element });
     });
 
+    patientIDs.forEach((element) => {
+      patient_ids.push({ value: element, label: element });
+    });
+
     console.log(options);
-  }, [doctorIDs, yearDates]);
+  }, [doctorIDs, yearDates, patientIDs]);
 
   const handleHospitalTitle = () => {
     setTitle("Hospital Data");
@@ -162,8 +172,22 @@ export default function MiniDrawer({ doctorIDs, yearDates }) {
     setPlaceholder("Select Patient ID");
   };
 
-  const handleChange = (handle) => {
-    setSelectValue(handle.value);
+  const handleChange_Doc_id_Select = (handle) => {
+    console.log("current doc_id", handle.value);
+    setDoc_id(handle.value);
+
+    return <doctorsChart doc_id={handle.value} selectedYear={year} />;
+  };
+
+  const handleChange_patient_id_Select = (handle) => {
+    setPatient_id(handle.value);
+  };
+
+  const handleChange_years_Select = (handle) => {
+    setYear(handle.value);
+    console.log("current year", handle.value);
+
+    return <doctorsChart doc_id={doc_id} selectedYear={handle.value} />;
   };
 
   return (
@@ -191,17 +215,26 @@ export default function MiniDrawer({ doctorIDs, yearDates }) {
                 <Select
                   styles={customStyles}
                   placeholder="Select Year"
-                  onChange={handleChange}
+                  onChange={handleChange_years_Select}
                   options={years}
                 />
               )}
-              {showSelect && (
+              {showSelect && placeholder === "Select Doctor ID" ? (
                 <Select
                   styles={customStyles}
                   placeholder={placeholder}
-                  onChange={handleChange}
+                  onChange={handleChange_Doc_id_Select}
                   options={options}
                 />
+              ) : (
+                showSelect && (
+                  <Select
+                    styles={customStyles}
+                    placeholder={placeholder}
+                    onChange={handleChange_patient_id_Select}
+                    options={patient_ids}
+                  />
+                )
               )}
             </div>
           </div>
@@ -281,10 +314,10 @@ export default function MiniDrawer({ doctorIDs, yearDates }) {
         <Route path="/" exact component={HospitalChart} />
         <Route path="/hospitalChart" exact component={HospitalChart} />
         <Route path="/doctorChart" exact>
-          <DoctorChart selectedYear={selectValue} />
+          <DoctorChart selectedYear={year} doc_id={doc_id} />
         </Route>
         <Route path="/PatientChart" exact>
-          <PatientChart selectedYear={selectValue} />
+          <PatientChart selectedYear={year} patient_Id={patient_id} />
         </Route>
       </main>
     </div>
