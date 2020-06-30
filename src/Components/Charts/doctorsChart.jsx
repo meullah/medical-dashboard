@@ -76,7 +76,7 @@ export default class doctorsChart extends Component {
         datasets: [
           {
             label: "Number of Patients",
-            data: [props.doc_id, props.selectedYear],
+            data: [2, 3, 1, 1, 4, 2, 1, 0.5, 2, 5, 0, 2],
             borderColor: "#1f8ef1",
             borderWidth: 2,
             pointBackgroundColor: "#1f8ef1",
@@ -134,90 +134,28 @@ export default class doctorsChart extends Component {
           },
         ],
       },
-      departmentalExpensesChart: {
+      ageGroupChart: {
         labels: [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC",
+          "Less than 5",
+          "Between 5 and 18",
+          "Between 18 and 34",
+          "Between 34 and 65",
+          "65 and Above",
         ],
         datasets: [
           {
-            label: "Departmental Expenses",
-            data: [
-              3179,
-              1744,
-              2416,
-              4232,
-              3668,
-              1734,
-              1241,
-              3033,
-              3247,
-              2875,
-              3427,
-              2368,
-              598,
-              2916,
-              974,
-              2187,
-              3281,
-              3328,
-              418,
-              4227,
-              4565,
-              1360,
-              3475,
-              2737,
-              1085,
-              507,
-              2663,
-              1485,
-            ],
+            label: "female",
+            data: [3179, 1744, 2416, 4232, 368],
             borderColor: "#d048b6",
+            backgroundColor: "#d048b6",
             borderWidth: 2,
           },
           {
-            label: "aaaaaaaahhhhhhh",
-            data: [
-              3179,
-              1744,
-              2416,
-              4232,
-              3668,
-              1734,
-              1241,
-              3033,
-              3247,
-              2875,
-              3427,
-              2368,
-              598,
-              2916,
-              974,
-              2187,
-              3281,
-              3328,
-              418,
-              4227,
-              4565,
-              1360,
-              3475,
-              2737,
-              1085,
-              507,
-              2663,
-              1485,
-            ],
-            borderColor: "#000",
+            label: "males",
+            data: [2179, 1144, 4416, 1232, 668],
+
+            borderColor: "#1f8ef1",
+            backgroundColor: "#1f8ef1",
             borderWidth: 2,
           },
         ],
@@ -302,7 +240,7 @@ export default class doctorsChart extends Component {
           return response.json();
         })
         .then((data) => {
-          console.log("gender data", data);
+          // console.log("gender data", data);
           let info = [];
           if ("F" in data) {
             info.push(data.F);
@@ -317,6 +255,32 @@ export default class doctorsChart extends Component {
           var previousStates = this.state.patientGender.datasets[0]; // Y capital
           previousStates.data = info; // data
           this.setState({ previousStates });
+          // console.log("previous states", previousStates.data);
+          // console.log("new states", this.state.GenderChart.datasets[0].data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // fetch age group gender data
+
+      fetch(
+        `http://localhost:5000/doctorsPatientGenderAgeRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("gender Age data", data);
+          // Y capital
+          var states = this.state.ageGroupChart;
+          var previousStates_female = states.datasets[0];
+          var previousStates_male = states.datasets[1];
+          previousStates_female.data = data.female;
+          previousStates_male.data = data.male;
+          this.setState({ states });
+          // this.setState({ previousStates_male });
+
           // console.log("previous states", previousStates.data);
           // console.log("new states", this.state.GenderChart.datasets[0].data);
         })
@@ -390,12 +354,12 @@ export default class doctorsChart extends Component {
     }
     return data;
   };
-  getDepartmentalChartData = (canvas) => {
-    const data = this.state.departmentalExpensesChart;
+  getAgeGroupData = (canvas) => {
+    const data = this.state.ageGroupChart;
     if (data.datasets) {
       const ctx = canvas.getContext("2d");
       var gradient = ctx.createLinearGradient(0, 230, 0, 50);
-      gradient.addColorStop(1, "rgba(72,72,176,0.1)");
+      gradient.addColorStop(1, "rgba(72,72,176,0.2)");
       gradient.addColorStop(0.4, "rgba(72,72,176,0.0)");
       gradient.addColorStop(0, "rgba(119,52,169,0)");
 
@@ -472,7 +436,7 @@ export default class doctorsChart extends Component {
                           },
                           ticks: {
                             suggestedMin: 0,
-                            suggestedMax: 25,
+                            suggestedMax: 5,
                             padding: 20,
                             fontColor: "#9a9a9a",
                           },
@@ -530,8 +494,8 @@ export default class doctorsChart extends Component {
                             zeroLineColor: "transparent",
                           },
                           ticks: {
-                            suggestedMin: 60,
-                            suggestedMax: 120,
+                            suggestedMin: 0,
+                            suggestedMax: 5,
                             padding: 20,
                             fontColor: "#9e9e9e",
                           },
@@ -552,7 +516,7 @@ export default class doctorsChart extends Component {
                       ],
                     },
                   }}
-                  data={this.getDepartmentalChartData}
+                  data={this.getAgeGroupData}
                 />
               </CardContent>
             </Card>
