@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Line, Doughnut, Bar } from "react-chartjs-2";
-import { Grid, Typography, ButtonGroup } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
@@ -44,6 +44,7 @@ export default class hospitalChart extends Component {
         datasets: [
           {
             label: "Total Expenses",
+            yAxisID: "Total Expenses",
             data: [100, 110, 76, 105, 50, 100, 90, 95, 100, 75, 110, 120],
             borderColor: "#1f8ef1",
             borderWidth: 2,
@@ -55,6 +56,22 @@ export default class hospitalChart extends Component {
             pointHoverBorderWidth: 15,
             pointRadius: 4,
           },
+          // {
+          //   label: "Anomaly Level",
+          //   yAxisID: "Anomaly Level",
+          //   data: [0, 1, 2, 1, 1, 1, 2, 3, 0, 0, 1, 2],
+          //   borderColor: "rgba(255,255,255,0)",
+          //   backgroundColor: "rgba(255,255,255,0)",
+          //   borderWidth: 2,
+          //   pointBackgroundColor: "#FF0000",
+          //   pointBorderColor: "rgba(255,255,255,0)",
+          //   pointHoverBackgroundColor: "#FF0000",
+          //   pointBorderWidth: 20,
+          //   pointHoverRadius: 4,
+          //   pointHoverBorderWidth: 15,
+          //   pointRadius: 4,
+          //   // pointStyle: "cross",
+          // },
         ],
       },
       YearlyTransation_PREDICTION: {
@@ -203,9 +220,10 @@ export default class hospitalChart extends Component {
       gradient.addColorStop(1, "rgba(29,140,248,0.2)");
       gradient.addColorStop(0.4, "rgba(29,140,248,0.0)");
       gradient.addColorStop(0, "rgba(29,140,248,0)");
-      data.datasets.forEach((set) => {
-        set.backgroundColor = gradient;
-      });
+      data.datasets[0].backgroundColor = gradient;
+      // data.datasets.forEach((set) => {
+      //   set.backgroundColor = gradient;
+      // });
     }
     return data;
   };
@@ -243,7 +261,9 @@ export default class hospitalChart extends Component {
   getPredictionData = () => {
     console.log("here");
 
-    fetch(`http://localhost:5000/hospitalYearlyPrediction/12`)
+    fetch(
+      `https://stormy-shore-15606.herokuapp.com/hospitalYearlyPrediction/12`
+    )
       .then((response) => {
         return response.json();
       })
@@ -262,7 +282,9 @@ export default class hospitalChart extends Component {
   get_Gender_Chart_Data = (handle) => {
     // this.setState({ genderYear: handle.value });
     // console.log("Handle Value", handle.value);
-    fetch(`http://localhost:5000/genderData/year/${handle.value}`)
+    fetch(
+      `https://stormy-shore-15606.herokuapp.com/genderData/year/${handle.value}`
+    )
       .then((response) => {
         return response.json();
       })
@@ -281,7 +303,9 @@ export default class hospitalChart extends Component {
 
   get_Age_Group_Data = (handle) => {
     // console.log("Handle Value", handle.value);
-    fetch(`http://localhost:5000/ageGroupData/year/${handle.value}`)
+    fetch(
+      `https://stormy-shore-15606.herokuapp.com/ageGroupData/year/${handle.value}`
+    )
       .then((response) => {
         return response.json();
       })
@@ -300,7 +324,9 @@ export default class hospitalChart extends Component {
 
   getDepartmentsData = (handle) => {
     console.log("Handle Value", handle.value);
-    fetch(`http://localhost:5000/departmentalExpensesData/year/${handle.value}`)
+    fetch(
+      `https://stormy-shore-15606.herokuapp.com/departmentalExpensesData/year/${handle.value}`
+    )
       .then((response) => {
         return response.json();
       })
@@ -321,15 +347,24 @@ export default class hospitalChart extends Component {
   };
   get_yearly_transation_data = (handle) => {
     // console.log("Handle Value", handle.value);
-    fetch(`http://localhost:5000/yearlyTransactionData/year/${handle.value}`)
+    fetch(
+      `https://stormy-shore-15606.herokuapp.com/yearlyTransactionData/year/${handle.value}`
+    )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data.yearlyTransaction);
-        var previousStates = this.state.YearlyTransation.datasets[0]; // Y capital
-        previousStates.data = data.yearlyTransaction; // data
+        // console.log("asdasdasdasd", data);
+        var previousStates = this.state.YearlyTransation; // Y capital
+        let lineChart = previousStates.datasets[0];
+        // let AnomalyPoint = previousStates.datasets[1];
+        lineChart.data = data.yearlyTransaction;
+        // AnomalyPoint.data = data.Anomaly;
+        // previousStates.data = data.yearlyTransaction; // data
         this.setState({ previousStates });
+        // var temp = this.state.yearlyTransaction.datasets[1];
+        // temp.data = data.Anomaly;
+        // this.setState({ temp });
         // console.log(previousStates.data);
         // console.log("new states", this.state.GenderChart.datasets[0].data);
       })
@@ -447,6 +482,8 @@ export default class hospitalChart extends Component {
                     scales: {
                       yAxes: [
                         {
+                          id: "Total Expenses",
+                          position: "left",
                           barPercentage: 1.6,
                           gridLines: {
                             drawBorder: false,
@@ -460,6 +497,23 @@ export default class hospitalChart extends Component {
                             fontColor: "#9a9a9a",
                           },
                         },
+                        // {
+                        //   id: "Anomaly Level",
+                        //   barPercentage: 1.6,
+                        //   position: "right",
+                        //   gridLines: {
+                        //     drawBorder: false,
+                        //     color: "rgba(255,0,0,0.5)",
+                        //     zeroLineColor: "transparent",
+                        //   },
+                        //   ticks: {
+                        //     suggestedMin: 0,
+                        //     suggestedMax: 3,
+                        //     stepSize: 1,
+                        //     padding: 20,
+                        //     fontColor: "#9a9a9a",
+                        //   },
+                        // },
                       ],
                       xAxes: [
                         {
@@ -487,13 +541,13 @@ export default class hospitalChart extends Component {
             <Card style={{ height: "320px" }}>
               <div style={myStyles}>
                 <Typography variant="h6">Departmental Expenses</Typography>
-                <div className="chart_menubar">
+                <div>
                   <Select
                     options={options}
                     placeholder="Year..."
                     onChange={this.getDepartmentsData}
                   />
-                  <ButtonGroup
+                  {/* <ButtonGroup
                     variant="contained"
                     color="primary"
                     aria-label="contained primary button group"
@@ -501,7 +555,7 @@ export default class hospitalChart extends Component {
                     <Button selected>1 Month</Button>
                     <Button>6 Month</Button>
                     <Button>1 Year</Button>
-                  </ButtonGroup>
+                  </ButtonGroup> */}
                 </div>
               </div>
               <CardContent>

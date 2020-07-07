@@ -15,16 +15,22 @@ function App() {
   const [date, setDate] = useState([]);
 
   useEffect(() => {
+    console.log("here");
     async function getData() {
       const res_patient_ids = await axios.get(
-        "http://localhost:5000/patients_ids"
+        "https://stormy-shore-15606.herokuapp.com/patients_ids"
       );
-      const res_doc_ids = await axios.get("http://localhost:5000/doctors_ids");
+      const res_doc_ids = await axios.get(
+        "https://stormy-shore-15606.herokuapp.com/doctors_ids"
+      );
 
-      const res_yearDates = await axios.get("http://localhost:5000/dateyears");
+      const res_yearDates = await axios.get(
+        "https://stormy-shore-15606.herokuapp.com/dateyears"
+      );
       setDoctorIDs(res_doc_ids.data);
       setPatientIDs(res_patient_ids.data);
       setDate(res_yearDates.data);
+      console.log("data for select", res_doc_ids, res_yearDates);
     }
     getData();
   }, []);

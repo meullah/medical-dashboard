@@ -91,26 +91,22 @@ export default class doctorsChart extends Component {
       bubbleChart: {
         labels: ["Scatter"],
         yLabels: ["Mon", "Tue", "wed", "Thu", "Fri", "SAT", "SUN"],
-        xLabels: [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC",
-        ],
+        xLabels: [0, 1, 2, 3, 4, 5, 6, 7],
 
         datasets: [
           {
             label: "My First dataset",
             fill: false,
-            backgroundColor: "rgba(75,192,192,0.4)",
+            backgroundColor: [
+              "rgba(75,192,192,0.4)",
+              "rgba(255,192,192,0.4)",
+              "RGB(205, 103, 39,0.4)",
+              "rgba(255,125,12,0.4)",
+              "rgba(155,92,292,0.4)",
+              "rgba(125,12,112,0.4)",
+              "rgba(25,212,192,0.4)",
+              "rgba(251,92,292,0.4)",
+            ],
             pointBorderColor: "rgba(75,192,192,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
@@ -184,7 +180,7 @@ export default class doctorsChart extends Component {
 
     // async function getChartsData() {
     //   const patients_per_month = await axios.get(
-    //     `http://localhost:5000/doctorsPatientEarlyRecord/year/${year}/doc_id/${doctorID}`
+    //     `https://stormy-shore-15606.herokuapp.com/doctorsPatientEarlyRecord/year/${year}/doc_id/${doctorID}`
     //   );
     //   console.log(patients_per_month);
     //   perviousStates.data = patients_per_month.data;
@@ -205,7 +201,7 @@ export default class doctorsChart extends Component {
       // Fetch Patients per month
 
       fetch(
-        `http://localhost:5000/doctorsPatientEarlyRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+        `https://stormy-shore-15606.herokuapp.com/doctorsPatientEarlyRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
       )
         .then((response) => {
           return response.json();
@@ -224,7 +220,7 @@ export default class doctorsChart extends Component {
 
       // Fetch Patients Gender info
       fetch(
-        `http://localhost:5000/doctorsPatientGenderRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+        `https://stormy-shore-15606.herokuapp.com/doctorsPatientGenderRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
       )
         .then((response) => {
           return response.json();
@@ -255,7 +251,7 @@ export default class doctorsChart extends Component {
       // fetch age group gender data
 
       fetch(
-        `http://localhost:5000/doctorsPatientGenderAgeRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+        `https://stormy-shore-15606.herokuapp.com/doctorsPatientGenderAgeRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
       )
         .then((response) => {
           return response.json();
@@ -281,7 +277,7 @@ export default class doctorsChart extends Component {
       //  get bubble chart data
 
       fetch(
-        `http://localhost:5000/doctorbubblechart/doc_id/${this.props.doc_id}`
+        `https://stormy-shore-15606.herokuapp.com/doctorbubblechart/doc_id/${this.props.doc_id}`
       )
         .then((response) => {
           return response.json();
@@ -297,7 +293,7 @@ export default class doctorsChart extends Component {
 
           var i;
           for (i = 0; i < ageGroup.length; i++) {
-            let temp = { x: ageGroup[i], y: service[i], z: freq[i] };
+            let temp = { x: ageGroup[i], y: service[i], r: freq[i] };
             newDict.push(temp);
           }
           previousStates.data = newDict;
@@ -305,6 +301,16 @@ export default class doctorsChart extends Component {
 
           console.log("previous states", previousStates.data);
           console.log("new states", this.state.bubbleChart.datasets[0].data);
+
+          function compareNumbers(a, b) {
+            return b - a;
+          }
+
+          let temp = this.state.bubbleChart;
+          service = Array.from(new Set(service)).sort(compareNumbers);
+          console.log(service);
+          temp.yLabels = service;
+          this.setState({ temp });
         })
         .catch((error) => {
           console.log(error);
@@ -315,7 +321,7 @@ export default class doctorsChart extends Component {
     //   prevProps.selectedYear !== null
     // ) {
     //   fetch(
-    //     `http://localhost:5000/doctorsPatientEarlyRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+    //     `https://stormy-shore-15606.herokuapp.com/doctorsPatientEarlyRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
     //   )
     //     .then((response) => {
     //       return response.json();
@@ -394,10 +400,6 @@ export default class doctorsChart extends Component {
     };
     return (
       <div>
-        <div>
-          {this.props.selectedYear}
-          {this.props.doc_id}
-        </div>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Card style={{ height: "300px" }}>
@@ -558,7 +560,9 @@ export default class doctorsChart extends Component {
           <Grid item xs={12}>
             <Card style={{ height: "auto" }}>
               <div style={myStyles}>
-                <Typography variant="h6">Bubble</Typography>
+                <Typography variant="h6">
+                  Services Fequency Per Age Group
+                </Typography>
               </div>
               <CardContent>
                 <Bubble
