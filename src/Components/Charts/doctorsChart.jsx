@@ -5,6 +5,7 @@ import { Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 // import { makeStyles, withStyles } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
+import WarningIcon from "@material-ui/icons/Warning";
 // import Button from "@material-ui/core/Button";
 // import TableCell from "@material-ui/core/TableCell";
 // import TableBody from "@material-ui/core/TableBody";
@@ -12,7 +13,8 @@ import CardContent from "@material-ui/core/CardContent";
 // import TableHead from "@material-ui/core/TableHead";
 // import Paper from "@material-ui/core/Paper";
 // import TableRow from "@material-ui/core/TableRow";
-// import Popup from "reactjs-popup";
+import Popup from "reactjs-popup";
+
 import "./popUp.css";
 // import axios from "axios";
 // const StyledTableCell = withStyles((theme) => ({
@@ -74,7 +76,7 @@ export default class doctorsChart extends Component {
         datasets: [
           {
             label: "Number of Patients",
-            data: [2, 3, 1, 1, 4, 2, 1, 0.5, 2, 5, 0, 2],
+            data: [],
             borderColor: "#1f8ef1",
             borderWidth: 2,
             pointBackgroundColor: "#1f8ef1",
@@ -90,12 +92,12 @@ export default class doctorsChart extends Component {
 
       bubbleChart: {
         labels: ["Scatter"],
-        yLabels: ["Mon", "Tue", "wed", "Thu", "Fri", "SAT", "SUN"],
+        yLabels: [],
         xLabels: [0, 1, 2, 3, 4, 5, 6, 7],
 
         datasets: [
           {
-            label: "My First dataset",
+            label: "Services VS Age Group",
             fill: false,
             backgroundColor: [
               "rgba(75,192,192,0.4)",
@@ -117,13 +119,13 @@ export default class doctorsChart extends Component {
             pointRadius: 10,
             pointHitRadius: 10,
             data: [
-              { x: 0, y: 75, r: 10 },
-              { x: 1, y: 49, r: 10 },
-              { x: 2, y: 90, r: 150 },
-              { x: 3, y: 29, r: 30 },
-              { x: 4, y: 36, r: 10 },
-              { x: 5, y: 25, r: 50 },
-              { x: 6, y: 18, r: 16 },
+              // { x: 0, y: 75, r: 10 },
+              // { x: 1, y: 49, r: 10 },
+              // { x: 2, y: 90, r: 150 },
+              // { x: 3, y: 29, r: 30 },
+              // { x: 4, y: 36, r: 10 },
+              // { x: 5, y: 25, r: 50 },
+              // { x: 6, y: 18, r: 16 },
             ],
           },
         ],
@@ -139,14 +141,14 @@ export default class doctorsChart extends Component {
         datasets: [
           {
             label: "female",
-            data: [3179, 1744, 2416, 4232, 368],
+            data: [],
             borderColor: "#d048b6",
             backgroundColor: "#d048b6",
             borderWidth: 2,
           },
           {
             label: "males",
-            data: [2179, 1144, 4416, 1232, 668],
+            data: [],
 
             borderColor: "#1f8ef1",
             backgroundColor: "#1f8ef1",
@@ -159,7 +161,7 @@ export default class doctorsChart extends Component {
         datasets: [
           {
             label: "Total Patients",
-            data: [12, 12],
+            data: [],
             backgroundColor: ["#d048b6", "#1f8ef1", "#00d6b4"],
             pointStyle: "line",
           },
@@ -170,6 +172,123 @@ export default class doctorsChart extends Component {
 
   componentDidMount() {
     console.log("doctors props", this.props);
+    if (this.props.selectedYear !== null && this.props.doc_id !== null) {
+      fetch(
+        `https://stormy-shore-15606.herokuapp.com/doctorsPatientEarlyRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          // console.log(data);
+          var previousStates = this.state.data.datasets[0]; // Y capital
+          previousStates.data = data; // data
+          this.setState({ previousStates });
+          // console.log("previous states", previousStates.data);
+          // console.log("new states", this.state.GenderChart.datasets[0].data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // Fetch Patients Gender info
+      fetch(
+        `https://stormy-shore-15606.herokuapp.com/doctorsPatientGenderRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          // console.log("gender data", data);
+          let info = [];
+          if ("F" in data) {
+            info.push(data.F);
+            if ("M" in data) {
+              info.push(data.M);
+            }
+          } else if ("M" in data) {
+            info.push(0);
+            info.push(data.M);
+          }
+
+          var previousStates = this.state.patientGender.datasets[0]; // Y capital
+          previousStates.data = info; // data
+          this.setState({ previousStates });
+          // console.log("previous states", previousStates.data);
+          // console.log("new states", this.state.GenderChart.datasets[0].data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // fetch age group gender data
+
+      fetch(
+        `https://stormy-shore-15606.herokuapp.com/doctorsPatientGenderAgeRecord/year/${this.props.selectedYear}/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("gender Age data", data);
+          // Y capital
+          var states = this.state.ageGroupChart;
+          var previousStates_female = states.datasets[0];
+          var previousStates_male = states.datasets[1];
+          previousStates_female.data = data.female;
+          previousStates_male.data = data.male;
+          this.setState({ states });
+          // this.setState({ previousStates_male });
+
+          // console.log("previous states", previousStates.data);
+          // console.log("new states", this.state.GenderChart.datasets[0].data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      //  get bubble chart data
+
+      fetch(
+        `https://stormy-shore-15606.herokuapp.com/doctorbubblechart/doc_id/${this.props.doc_id}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("bubble chart data", data);
+          var previousStates = this.state.bubbleChart.datasets[0];
+          let newDict = [];
+          let ageGroup = data.age_group;
+          let freq = data.frequency;
+          let service = data.service;
+          console.log(ageGroup, freq, service, ageGroup.length);
+
+          var i;
+          for (i = 0; i < ageGroup.length; i++) {
+            let temp = { x: ageGroup[i], y: service[i], r: freq[i] };
+            newDict.push(temp);
+          }
+          previousStates.data = newDict;
+          this.setState({ previousStates });
+
+          console.log("previous states", previousStates.data);
+          console.log("new states", this.state.bubbleChart.datasets[0].data);
+
+          function compareNumbers(a, b) {
+            return b - a;
+          }
+
+          let temp = this.state.bubbleChart;
+          service = Array.from(new Set(service)).sort(compareNumbers);
+          console.log(service);
+          temp.yLabels = service;
+          this.setState({ temp });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
   updateAndNotify = () => {
     let year = this.props.selectedYear;
@@ -191,6 +310,7 @@ export default class doctorsChart extends Component {
 
   // check if props have changed or not
   // componentDidUpdate has previous props as a parameter
+
   componentDidUpdate(prevProps) {
     if (
       (prevProps.selectedYear !== this.props.selectedYear &&
@@ -644,6 +764,37 @@ export default class doctorsChart extends Component {
             </TableContainer>
           </Grid> */}
         </Grid>
+
+        <Popup
+          open={
+            this.props.doc_id === null || this.props.selectedYear === null
+              ? true
+              : false
+          }
+          closeOnDocumentClick={false}
+          // onClose={this.closeModal}
+          modal
+        >
+          <div
+            style={{
+              display: "flex",
+              background: "white",
+              padding: "2%",
+              borderRadius: "10px",
+            }}
+          >
+            <div>
+              <WarningIcon style={{ color: "#FFCC00", fontSize: 60 }} />
+            </div>
+            <div
+              style={{ display: "flex", alignItems: "center", margin: "auto" }}
+            >
+              <span style={{ fontSize: 30 }}>
+                Select a desired year and doctor's ID
+              </span>
+            </div>
+          </div>
+        </Popup>
       </div>
     );
   }

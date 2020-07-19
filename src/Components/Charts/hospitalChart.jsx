@@ -45,7 +45,20 @@ export default class hospitalChart extends Component {
           {
             label: "Total Expenses",
             yAxisID: "Total Expenses",
-            data: [100, 110, 76, 105, 50, 100, 90, 95, 100, 75, 110, 120],
+            data: [
+              22470,
+              25440,
+              69460,
+              36900,
+              24840,
+              16510,
+              27130,
+              53200,
+              42520,
+              239343,
+              91160,
+              55220,
+            ],
             borderColor: "#1f8ef1",
             borderWidth: 2,
             pointBackgroundColor: "#1f8ef1",
@@ -110,7 +123,7 @@ export default class hospitalChart extends Component {
         datasets: [
           {
             label: "Total Patients",
-            data: [2300, 3000, 500],
+            data: [419, 291],
             backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"],
             pointStyle: "line",
           },
@@ -121,74 +134,68 @@ export default class hospitalChart extends Component {
         datasets: [
           {
             label: "Total Patients",
-            data: [2300, 3000, 500],
+            data: [78, 486, 146],
             backgroundColor: ["#1f8ef1", "#d048b6", "#00d6b4"],
           },
         ],
       },
       departmentalExpensesChart: {
         labels: [
-          "Admissions",
-          "Anesthetics",
-          "Burn Center",
-          "Cardiology",
-          "Chaplaincy",
-          "Imaging",
+          "Allergy & Immunology",
+          "Cardiologist",
+          "Dentistry",
+          "Dermatologist",
+          "ENT Specialist",
           "Emergency",
-          "Gastroenterology",
-          "General",
-          "Surgery",
-          "Gynecology",
-          "Haematology",
-          "ICU",
-          "Infection",
-          "Maternity",
-          "Microbiology",
-          "Neonatal",
-          "Nephrology",
-          "Neurology",
-          "Obstetrics",
-          "Therapy",
-          "Oncology",
-          "Ophthalmology",
-          "Orthopaedics",
-          "Otolaryngology",
-          "Physiotherapy",
-          "Radiology",
-          "Radiotherapy",
+          "Endocrinologist",
+          "Gastroenterogist",
+          "General Medicine/ Internal Medicine",
+          "General Surgeon",
+          "Medical Specialist",
+          "Nephrologist",
+          "Neurologist",
+          "OB/Gyne",
+          "Oncologist",
+          "Orthopedic",
+          "Pain Management",
+          "Pediatric Cardiologist",
+          "Pediatrician",
+          "Physical Med & Rehabilitation",
+          "Rheumatologist",
+          "Self",
+          "Shifa Employee Health Care",
+          "Surgery - Plastic",
+          "Urologist",
         ],
         datasets: [
           {
             label: "Departmental Expenses",
             data: [
-              3179,
-              1744,
-              2416,
-              4232,
-              3668,
-              1734,
-              1241,
-              3033,
-              3247,
-              2875,
-              3427,
-              2368,
-              598,
-              2916,
-              974,
-              2187,
-              3281,
-              3328,
-              418,
-              4227,
-              4565,
-              1360,
-              3475,
-              2737,
-              1085,
-              507,
-              2663,
-              1485,
+              365030,
+              56873,
+              170,
+              2550,
+              1394,
+              4410,
+              3248,
+              3034,
+              7401,
+              2255,
+              33924,
+              14720,
+              540,
+              74146,
+              2380,
+              1349,
+              7030,
+              7720,
+              5340,
+              440,
+              8780,
+              17031,
+              82600,
+              310,
+              1518,
             ],
             borderColor: "#d048b6",
             borderWidth: 2,
@@ -442,6 +449,7 @@ export default class hospitalChart extends Component {
                 <div className="chart_menubar_1">
                   <Select
                     options={options}
+                    defaultValue={{ label: "2018", value: 2018 }}
                     placeholder="Year..."
                     onChange={this.get_yearly_transation_data}
                   />
@@ -545,6 +553,7 @@ export default class hospitalChart extends Component {
                   <Select
                     options={options}
                     placeholder="Year..."
+                    defaultValue={{ label: "2018", value: 2018 }}
                     onChange={this.getDepartmentsData}
                   />
                   {/* <ButtonGroup
@@ -621,6 +630,7 @@ export default class hospitalChart extends Component {
 
                 <Select
                   options={options}
+                  defaultValue={{ label: "2018", value: 2018 }}
                   onChange={this.get_Gender_Chart_Data}
                   placeholder="Year..."
                 />
@@ -649,6 +659,7 @@ export default class hospitalChart extends Component {
                 <Typography variant="h6">Age Group</Typography>
                 <Select
                   options={options}
+                  defaultValue={{ label: "2018", value: 2018 }}
                   onChange={this.get_Age_Group_Data}
                   placeholder="Year..."
                 />

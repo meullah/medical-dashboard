@@ -214,7 +214,7 @@ export default function MiniDrawer({ doctorIDs, yearDates, patientIDs }) {
               {showSelect && (
                 <Select
                   styles={customStyles}
-                  placeholder="Select Year"
+                  placeholder={year === null ? "Select Year" : year}
                   onChange={handleChange_years_Select}
                   options={years}
                 />
@@ -222,7 +222,7 @@ export default function MiniDrawer({ doctorIDs, yearDates, patientIDs }) {
               {showSelect && placeholder === "Select Doctor ID" ? (
                 <Select
                   styles={customStyles}
-                  placeholder={placeholder}
+                  placeholder={doc_id == null ? placeholder : doc_id}
                   onChange={handleChange_Doc_id_Select}
                   options={options}
                 />
