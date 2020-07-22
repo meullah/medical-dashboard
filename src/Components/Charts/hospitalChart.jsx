@@ -266,25 +266,38 @@ export default class hospitalChart extends Component {
     return data;
   };
   getPredictionData = () => {
-    console.log("here");
+    // console.log("here");
 
-    fetch(
-      `https://stormy-shore-15606.herokuapp.com/hospitalYearlyPrediction/12`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // console.log(data.pridicted_values);
-        var previousStates = this.state.YearlyTransation_PREDICTION.datasets[0];
-        previousStates.data = data.pridicted_values;
-        // console.log(previousStates.data);
-        this.setState({ previousStates });
-        // console.log("new states", this.state.GenderChart.datasets[0].data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // fetch(
+    //   `https://stormy-shore-15606.herokuapp.com/hospitalYearlyPrediction/12`
+    // )
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    // console.log(data.pridicted_values);
+    var previousStates = this.state.YearlyTransation_PREDICTION.datasets[0];
+    previousStates.data = [
+      112469.96396974336,
+      115439.96396974336,
+      159459.96396974334,
+      126899.96396974334,
+      114839.96396974334,
+      106509.96396974334,
+      117129.96396974334,
+      143199.96396974334,
+      132519.96396974334,
+      329342.96396974334,
+      181159.96396974334,
+      145219.96396974334,
+    ];
+    // console.log(previousStates.data);
+    this.setState({ previousStates });
+    // console.log("new states", this.state.GenderChart.datasets[0].data);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   };
   get_Gender_Chart_Data = (handle) => {
     // this.setState({ genderYear: handle.value });

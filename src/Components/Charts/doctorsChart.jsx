@@ -93,7 +93,7 @@ export default class doctorsChart extends Component {
       bubbleChart: {
         labels: ["Scatter"],
         yLabels: [],
-        xLabels: [0, 1, 2, 3, 4, 5, 6, 7],
+        xLabels: [0, 1, 2],
 
         datasets: [
           {
@@ -595,7 +595,9 @@ export default class doctorsChart extends Component {
           <Grid item xs={8}>
             <Card style={{ height: "320px" }}>
               <div style={myStyles}>
-                <Typography variant="h6">Services Frequency</Typography>
+                <Typography variant="h6">
+                  Patients' Record per Age group
+                </Typography>
               </div>
               <CardContent>
                 <Bar
