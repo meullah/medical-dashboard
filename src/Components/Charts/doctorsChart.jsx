@@ -93,24 +93,15 @@ export default class doctorsChart extends Component {
       bubbleChart: {
         labels: ["Scatter"],
         yLabels: [],
-        xLabels: [0, 1, 2],
+        xLabels: [0, 1, 2, 3, 4, 5, 6, 7],
 
         datasets: [
           {
             label: "Services VS Age Group",
             fill: false,
-            backgroundColor: [
-              "rgba(75,192,192,0.4)",
-              "rgba(255,192,192,0.4)",
-              "RGB(205, 103, 39,0.4)",
-              "rgba(255,125,12,0.4)",
-              "rgba(155,92,292,0.4)",
-              "rgba(125,12,112,0.4)",
-              "rgba(25,212,192,0.4)",
-              "rgba(251,92,292,0.4)",
-            ],
+            backgroundColor: "rgba(75,192,192,0.6)",
             pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
+            pointBackgroundColor: "#f00",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHoverBackgroundColor: "rgba(75,192,192,1)",
@@ -684,6 +675,21 @@ export default class doctorsChart extends Component {
               <div style={myStyles}>
                 <Typography variant="h6">
                   Services Fequency Per Age Group
+                  {/* <Typography>
+                    0 corresponds to Age Group Less than 5
+                  </Typography>
+                  <Typography>
+                    1 corresponds to Age Group Between 5 & 18
+                  </Typography>
+                  <Typography>
+                    2 corresponds to Age Group Between 18 & 34
+                  </Typography>
+                  <Typography>
+                    3 corresponds to Age Group Between 34 & 65
+                  </Typography>
+                  <Typography>
+                    4 corresponds to Age Group 65 and above
+                  </Typography> */}
                 </Typography>
               </div>
               <CardContent>
@@ -713,7 +719,7 @@ export default class doctorsChart extends Component {
                       ],
                       xAxes: [
                         {
-                          type: "category",
+                          // type: "category",
                           barPercentage: 1.6,
                           gridLines: {
                             drawBorder: false,
